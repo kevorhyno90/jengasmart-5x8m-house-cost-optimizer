@@ -679,25 +679,27 @@ function renderInventoryTable() {
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>
+      <td data-label="Material">
         <div class="item-title">${item.name}</div>
         <div class="item-sub">${item.sub}</div>
       </td>
-      <td><strong>${item.required.toLocaleString()}</strong> ${item.unit}</td>
-      <td>
-        <input type="number" min="0" class="input-number stock-input" data-index="${index}" value="${item.inStock}">
-        <span class="item-sub">${item.unit}</span>
+      <td data-label="Required"><strong>${item.required.toLocaleString()}</strong> ${item.unit}</td>
+      <td data-label="You Have">
+        <div style="display: flex; align-items: center; gap: 0.4rem;">
+          <input type="number" min="0" class="input-number stock-input" data-index="${index}" value="${item.inStock}">
+          <span class="item-sub">${item.unit}</span>
+        </div>
       </td>
-      <td>
+      <td data-label="Deficit Status">
         <span class="badge-deficit ${deficit > 0 ? 'has-deficit' : 'is-covered'}">
           ${deficit > 0 ? `Needs +${deficit.toLocaleString()}` : '✓ Fully Covered'}
         </span>
       </td>
-      <td>
+      <td data-label="Unit Rate (KES)">
         <input type="number" min="0" class="input-number rate-input" data-index="${index}" value="${item.defaultRate}">
       </td>
-      <td class="font-bold text-primary">KES ${subtotalSpend.toLocaleString()}</td>
-      <td class="font-bold text-green">KES ${stockVal.toLocaleString()}</td>
+      <td data-label="To Spend" class="font-bold text-primary">KES ${subtotalSpend.toLocaleString()}</td>
+      <td data-label="Stock Value" class="font-bold text-green">KES ${stockVal.toLocaleString()}</td>
     `;
     inventoryBody.appendChild(tr);
   });
