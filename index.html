@@ -9,6 +9,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- PWA & Mobile App Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0284c7">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="JengaSmart">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="icon" type="image/png" href="assets/icon-192.png">
 </head>
 <body>
   <!-- Confetti Celebration Canvas -->
@@ -54,6 +63,10 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
           Print Order
         </button>
+        <button id="pwaInstallBtn" class="btn btn-install" onclick="triggerPwaInstall()" title="Install Devin's JengaSmart on your browser as an app">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          📲 Install App
+        </button>
         <button id="resetDefaultsBtn" class="btn btn-ghost" title="Reset to initial values">
           Reset
         </button>
@@ -84,6 +97,21 @@
       </div>
     </div>
   </header>
+
+  <!-- Floating PWA Install Bar -->
+  <div id="pwaFloatingBanner" class="pwa-floating-banner" style="display: none;">
+    <div class="pwa-banner-content">
+      <img src="assets/icon-192.png" alt="JengaSmart Icon" class="pwa-banner-icon">
+      <div>
+        <strong>Install Devin's JengaSmart App</strong>
+        <p>Install on your browser, phone, or PC for fast offline access!</p>
+      </div>
+    </div>
+    <div class="pwa-banner-actions">
+      <button id="pwaBannerInstallBtn" class="btn btn-install" onclick="triggerPwaInstall()" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;">Install Now</button>
+      <button id="pwaBannerDismissBtn" class="btn btn-ghost" onclick="dismissPwaBanner()" style="padding: 0.45rem; font-size: 0.85rem;">✕</button>
+    </div>
+  </div>
 
   <!-- Navigation Tabs -->
   <nav class="tabs-nav" aria-label="Project Sections">

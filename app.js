@@ -1069,5 +1069,86 @@ window.askPreset = function(type) {
   }, 350);
 };
 
+// ==========================================================================
+// PWA BROWSER APP INSTALLATION LOGIC
+// ==========================================================================
+let deferredInstallPrompt = null;
+
+// Listen for browser install prompt event (Chrome, Edge, Android, etc.)
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+
+  const installBtn = document.getElementById('pwaInstallBtn');
+  const floatingBanner = document.getElementById('pwaFloatingBanner');
+
+  if (installBtn) installBtn.style.display = 'inline-flex';
+  
+  // Show floating banner if user hasn't dismissed it in this session
+  if (floatingBanner && !sessionStorage.getItem('jengasmart_pwa_dismissed')) {
+    floatingBanner.style.display = 'flex';
+  }
+});
+
+// Check if app is already running in standalone PWA window
+window.addEventListener('DOMContentLoaded', () => {
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  const installBtn = document.getElementById('pwaInstallBtn');
+  if (isStandalone && installBtn) {
+    installBtn.innerHTML = '✓ App Installed';
+    installBtn.style.display = 'inline-flex';
+    installBtn.disabled = true;
+    installBtn.style.background = 'rgba(16, 185, 129, 0.2)';
+    installBtn.style.borderColor = '#10b981';
+  }
+});
+
+window.triggerPwaInstall = async function() {
+  playSound('click');
+  if (!deferredInstallPrompt) {
+    // If browser hasn't fired beforeinstallprompt or on iOS Safari
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      alert("📲 To install Devin's JengaSmart on your iPhone/iPad:\n1. Tap the 'Share' icon (square with arrow up at bottom of screen)\n2. Scroll down and tap 'Add to Home Screen'\n3. Tap 'Add' in the top right corner.");
+    } else {
+      alert("📲 To install Devin's JengaSmart on your PC / Mac / Android:\n• In Chrome/Edge on PC: Click the 'Install' icon in the URL address bar (top right)\n• On Android: Tap the 3 dots menu (⋮) and choose 'Install App' or 'Add to Home screen'.");
+    }
+    return;
+  }
+
+  deferredInstallPrompt.prompt();
+  const choiceResult = await deferredInstallPrompt.userChoice;
+  
+  if (choiceResult.outcome === 'accepted') {
+    triggerConfetti();
+    playSound('fanfare');
+    const installBtn = document.getElementById('pwaInstallBtn');
+    const floatingBanner = document.getElementById('pwaFloatingBanner');
+    if (installBtn) {
+      installBtn.innerHTML = '✓ App Installed';
+      installBtn.disabled = true;
+    }
+    if (floatingBanner) floatingBanner.style.display = 'none';
+  }
+  deferredInstallPrompt = null;
+};
+
+window.dismissPwaBanner = function() {
+  playSound('click');
+  const floatingBanner = document.getElementById('pwaFloatingBanner');
+  if (floatingBanner) floatingBanner.style.display = 'none';
+  sessionStorage.setItem('jengasmart_pwa_dismissed', 'true');
+};
+
+// Register Service Worker for offline capability
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => console.log('JengaSmart Service Worker registered:', reg.scope))
+      .catch((err) => console.log('Service Worker note:', err));
+  });
+}
+
 // Start app
 document.addEventListener('DOMContentLoaded', init);
+
