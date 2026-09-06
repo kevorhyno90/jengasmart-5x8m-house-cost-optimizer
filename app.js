@@ -454,9 +454,7 @@ window.setRoofDesign = function(type) {
     state.activeLevers.leverSkillionRoof = isMono;
   }
 
-  renderInventory();
-  renderCalculations();
-  renderShoppingList();
+  renderAll();
   saveState();
   playSound(isMono ? 'fanfare' : 'click');
   if (isMono) triggerConfetti();
