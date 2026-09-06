@@ -236,7 +236,7 @@ const CONSTRUCTION_PHASES = [
   {
     id: 2,
     title: 'Phase 2: Substructure Brick Walling & 100mm Floor Slab',
-    desc: 'Using your 2,000 bricks to build foundation wall to DPC level, lay 8 rolls DPM polythene, cast 100mm floor slab.',
+    desc: "Using Devin's 2,000 bricks to build foundation wall to DPC level, lay 8 rolls DPM polythene, cast 100mm floor slab.",
     materials: ['Bricks: 2,000 (Covered!)', 'DPM: 8 Rolls (Covered!)', 'Cement: 22 bags', 'Sand: 4 tons', 'Ballast: 4 tons'],
     estCost: 52000,
     duration: '5-6 days'
@@ -252,7 +252,7 @@ const CONSTRUCTION_PHASES = [
   {
     id: 4,
     title: 'Phase 4: Reinforced Concrete Ring Beam (200mm x 200mm)',
-    desc: 'Tying your D8 & R6 rebar cages, wooden formwork shuttering, and casting 1:2:4 grade concrete.',
+    desc: "Tying Devin's D8 & R6 rebar cages, wooden formwork shuttering, and casting 1:2:4 grade concrete.",
     materials: ['D8 Rebar: 14 pcs (Covered!)', 'R6 Rebar: 10 pcs (Covered!)', 'Binding Wire: 3kg (Covered!)', 'Cement: 8 bags', 'Ballast: 2 tons'],
     estCost: 28000,
     duration: '3-4 days'
@@ -413,10 +413,11 @@ function init() {
       document.querySelectorAll('.plan-sub-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
       const view = btn.getAttribute('data-view');
-      if (view === 'floorplan') document.getElementById('subViewFloorplan').classList.add('active');
-      if (view === 'topdown3d') document.getElementById('subViewTopdown3d').classList.add('active');
-      if (view === 'entrance3d') document.getElementById('subViewEntrance3d').classList.add('active');
-      if (view === 'roofs') document.getElementById('subViewRoofs').classList.add('active');
+      if (view === 'floorplan') document.getElementById('subViewFloorplan')?.classList.add('active');
+      if (view === 'topdown3d') document.getElementById('subViewTopdown3d')?.classList.add('active');
+      if (view === 'entrance3d') document.getElementById('subViewEntrance3d')?.classList.add('active');
+      if (view === 'roofs') document.getElementById('subViewRoofs')?.classList.add('active');
+      if (view === 'fulldossier') document.getElementById('subViewFullDossier')?.classList.add('active');
     });
   });
 
@@ -657,7 +658,7 @@ function renderShoppingList() {
   if (deficitItems.length === 0) {
     shoppingListPrintable.innerHTML = `
       <div style="padding: 1.5rem; text-align: center; color: #10b981;">
-        <h3>🎉 Congratulations!</h3>
+        <h3>🎉 Congratulations, Devin!</h3>
         <p>All materials required for your 5x8m house are currently marked as in-stock.</p>
       </div>
     `;
@@ -693,7 +694,7 @@ function renderShoppingList() {
   totalRow.style.paddingTop = '1rem';
   totalRow.innerHTML = `
     <div>
-      <strong style="color: #fff; font-size: 1rem;">TOTAL ESTIMATED HARDWARE DEFICIT</strong>
+      <strong style="color: #fff; font-size: 1rem;">DEVIN'S TOTAL HARDWARE DEFICIT</strong>
     </div>
     <div style="text-align: right;">
       <strong style="color: #38bdf8; font-size: 1.15rem; font-family: var(--font-mono);">KES ${totalDeficitCost.toLocaleString()}</strong>

@@ -1,13 +1,14 @@
-# 🇰🇪 JengaSmart — 5×8m (40m²) House Construction Cost Minimizer
+# 🇰🇪 Devin's JengaSmart — 5×8m (40m²) House Construction Cost Minimizer & Complete Plans
 
-An interactive web application and construction management suite designed specifically for building a **5.00m × 8.00m (40 m²)** 2-bedroom compact residential home in **Kenya**, optimizing every single shilling from foundation to roof.
+An interactive web application, construction management suite, and complete 6-sheet architectural engineering dossier tailored specifically for **Devin's 5.00m × 8.00m (40 m²)** 2-bedroom residential home in **Kenya**, optimizing every single shilling from foundation to roof.
 
-![JengaSmart Kenya](assets/top_down_plan.jpg)
+![Devin's 5x8m House Plan](assets/top_down_plan.jpg)
 
 ---
 
-## 🏗️ Project Overview
+## 🏗️ Project Overview (Client: Devin)
 
+- **Owner / Client:** Devin
 - **Footprint:** 8.00 m length × 5.00 m width (40 m² ground coverage)
 - **Accommodation:**
   - Master Bedroom (2.90m × 2.80m) with Queen bed & 2.2m wardrobe
@@ -19,10 +20,22 @@ An interactive web application and construction management suite designed specif
 
 ---
 
-## 💡 Key Features for Cost Minimization
+## 📑 Complete Architectural & Engineering Drawing Set Included
+
+The app embeds and includes all 6 official Kenya construction plan sheets:
+- **Sheet 1:** Master 3D Cutaway Floor Plan (Dual-Zone Living, 1.8m Walkway, Master & Kids Bedroom, Breakfast bar & Pantry)
+- **Sheet 2:** Main Entrance & Front Facade Design (Porch, Steps, Door Details, Interior Access Flow)
+- **Sheet 3:** Roof Structural Options (Option 1: Traditional Gable 4.25m vs Option 2: Modern Skillion Mono-Pitch)
+- **Sheet 4:** 2D Dimensioned Blueprint & Wall Layout (5.00m × 8.00m exterior, room m², wall thickness, window schedules)
+- **Sheet 5:** Electrical, Lighting & Sanitation Schematics (Power sockets, light switches, external drainage path)
+- **Sheet 6:** Itemized Kenya Materials Bill of Quantities (BOQ) & Procurement Plan
+
+---
+
+## 💡 Key Features for Minimizing Costs
 
 ### 1. Preloaded Kenya Inventory & Deficit Engine
-Pre-configured with your exact starting materials:
+Pre-configured with Devin's exact starting materials:
 - **Clay Bricks:** 2,000 bricks on site (Foundation substructure covered; calculates remaining 5,000 deficit)
 - **Mabati (G28 Iron Sheets):** 15 sheets on site (Deficit: 9 sheets to cover full 24-sheet roof)
 - **Cement (50kg bags):** 20 bags on site (Deficit: 70 bags for remaining stages)
@@ -51,15 +64,16 @@ Interactive switches that calculate real-world Kenyan construction savings:
 6. Steel Windows, Doors & External Plastering
 7. Floor Screed Finish & Electrical 1st Fix
 
-### 4. Interactive 2D & 3D Architectural Visualizer
+### 4. Interactive Visualizer & Blueprint Hub
 - Clickable 2D SVG blueprint displaying room dimensions, furniture clearances, and electrical switch layouts.
 - Top-down 3D architectural render.
 - Main entrance perspective render.
 - Gable vs Skillion roof comparison gallery.
+- Embedded full-page multi-sheet architectural dossier.
 
 ### 5. Official Documents & Contracts
-- **Hardware Deficit Purchase Requisition:** Auto-generates a clean list of only the materials you still need to buy.
-- **Standard Kenya Artisan Milestone Contract ("Kandarasi"):** Printable formal legal agreement with milestone stages, timeline limits, material wastage penalties, and 10% retention clause.
+- **Devin's Hardware Deficit Purchase Requisition:** Auto-generates a clean list of only the materials Devin still needs to buy.
+- **Standard Kenya Artisan Milestone Contract ("Kandarasi"):** Printable formal legal agreement with milestone stages, timeline limits, material wastage penalties, and 10% retention clause protecting Devin from contractor abandonment.
 
 ---
 
@@ -102,4 +116,4 @@ To view the live app online from anywhere on your phone or computer:
 
 ## 📋 License
 
-MIT License — free to use and customize for your own house construction project in Kenya.
+MIT License — free to use and customize for Devin's residential construction project in Kenya.
