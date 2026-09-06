@@ -5,6 +5,24 @@
 
 // 1. REGIONAL UNIT RATES (KES)
 const REGIONAL_RATES = {
+  sotik: {
+    brick: 7, // Local red burned bricks along Sotik/Bomet valleys (KES 6-8)
+    cement: 730, // 50kg bag (Savannah/Simba/Bamburi) at Sotik Town hardware
+    sandTon: 1200, // River sand from Sondu Miriu / local rivers
+    ballastTon: 1300, // Kaplong / Kimulot local quarry machine ballast
+    ironSheet: 1380, // Box-profile G30 in Sotik
+    rebarD8: 720,
+    rebarR6: 390,
+    bindingWire: 230,
+    dpmRoll: 1700,
+    timber2x4: 38, // Local Bomet / Mau sawmills cypress 4x2 @ KES 38/ft
+    timber2x2: 20, // 2x2 purlins @ KES 20/ft
+    roofingNails: 260,
+    wireNails: 160,
+    ridgeCap: 650,
+    steelWindow: 5500, // Local fabricator casement window
+    flushDoor: 3800
+  },
   nairobi: {
     brick: 11,
     cement: 780,
@@ -356,12 +374,14 @@ const COPILOT_ANSWERS = {
   monopitch: "📐 **Devin's 4 Mono-Pitch Roof Designs Tailored to Your 5×8m Footprint:**\n\n⭐ **Design 1: High-Front Skillion (Front-to-Back 10° Fall)**\n• Front wall at 3.60m, rear at 2.85m. Maximizes airy living room height (3.3m clear).\n• Simplest carpentry (5.6m single-run 4x2 rafters). 100% rain to single rear tank gutter.\n• Requires 20 mabati (deficit only 5 sheets!). Saves KES 28,500!\n\n🏢 **Design 2: Parapet Hidden Mono-Pitch ('Flat Cube Villa')**\n• Modern cubic estate villa look (like high-end Nairobi villas) with zero visible metal eaves from the road!\n• Slope is hidden behind a 450mm brick/stone parapet wall with coping stones.\n• Excellent wind resistance and puts your 2,000 bricks to great use!\n\n🪟 **Design 3: Split-Level Clerestory (Dual Stepped Shed)**\n• High lounge roof (3.80m) and lower bedroom roof (2.65m) with an 800mm glass clerestory window band between them.\n• Floods daylight into the center corridor & bathroom! Hot air escapes naturally.\n\n📐 **Design 4: Side-to-Side Longitudinal (8m Fall)**\n• Slopes across the 8m length. Requires only a single 5m gutter on the side!\n\n⚡ **Fundi Directive:** For all designs, anchor 4x2 rafters using 25mm hoop iron straps cast directly into the concrete ring beam against wind uplift!",
   curing: "💧 **Devin's 7-Day Concrete Curing Directive:**\n• Concrete doesn't 'dry' to get hard—it cures through a chemical reaction (hydration) that demands water.\n• For the first 7 days after casting your floor slab or ring beam, have your fundi spray water twice daily (morning & evening) or cover the slab with wet gunny bags/sand berms.\n• **Fact:** Skipping curing cuts concrete strength by over 45% and causes spiderweb surface cracks!",
   theft: "🔒 **Preventing Cement & Rebar Leakage in Kenya:**\n1. Count every single bag offloaded from the lorry yourself or have a trusted relative present.\n2. Require the fundi to return the **EMPTY paper bags** every evening before paying daily wages (ensures bags weren't resold or taken off site).\n3. Keep cement off the ground on timber pallets covered with your DPM polythene rolls to prevent rising soil moisture from hardening bags into stones.",
-  bricks: "🧱 **Utilizing Devin's 2,000 Bricks Efficiently:**\n• Your 2,000 bricks are ideally suited for the **substructure foundation footing wall** (from strip footing up to DPC floor level).\n• Because foundation bricks are buried under backfill, you can use these 2,000 bricks right away in Phase 2.\n• For Phase 3 superstructure (walling to ring beam), you will need ~5,000 more bricks (~KES 50,000) or 480 quarry machine-cut stones (9\"x9\")."
+  bricks: "🧱 **Utilizing Devin's 2,000 Bricks Efficiently:**\n• Your 2,000 bricks are ideally suited for the **substructure foundation footing wall** (from strip footing up to DPC floor level).\n• Because foundation bricks are buried under backfill, you can use these 2,000 bricks right away in Phase 2.\n• For Phase 3 superstructure (walling to ring beam), you will need ~5,000 more bricks (~KES 50,000) or 480 quarry machine-cut stones (9\"x9\").",
+  sotik_extension: "🏡 **Devin's 5×6m → 5×8m Renovation & Extension Directives (Sotik Town):**\n\n1. **Massive Cost Savings (~KES 280,000+ Saved!):**\n  • 5m × 6m (30 m²) slab already cast = Saves ~KES 78,000!\n  • 5m back wall already bricked = Saves ~KES 32,000!\n  • 6m side walls already bricked = Saves ~KES 45,000!\n  • You ONLY need to build a **2.0m front extension (10 m² addition)** across the 5m width!\n\n2. **Your 2,000 Bricks in Stock Cover 100% of the Walling:**\n  • The 2m left wall + 2m right wall + 5m front facade only requires ~1,450 bricks.\n  • Your 2,000 in-stock bricks completely cover 100% of the extension with ~550 bricks surplus for entrance steps and drainage!\n  • **Brick Deficit to Buy = KES 0!**\n\n3. **Rebar Slab Stitching (Preventing Floor Cracks):**\n  • Drill 12mm holes 150mm deep into the front face of the existing 5x6m slab at 300mm intervals.\n  • Clean dust, apply cement slurry grout, and hammer in 400mm lengths of Y10 rebar dowels.\n  • Tie this into the new 5x2m slab BRC/rebar mesh before pouring concrete. This bonds both slabs permanently!\n\n4. **Monolithic Ring Beam:**\n  • Cast a single continuous 200×200mm reinforced concrete ring beam running around all perimeter walls (both old 6m walls and new 2m front) to create an unbreakable earthquake-resistant structural ring before placing your mono-pitch rafters.",
+  sotik_costs: "🛒 **Sotik Town Local Material & Hardware Sourcing Guide:**\n\n1. **Local Burned Bricks (Tofali za Kuchoma):** Buy from local kiln burners along the Sotik-Ndanai / Kaplong-Chebilat river banks at KES 6 - 8 each.\n2. **Cement:** Hardwares along Sotik main street & Kisii road junction sell Savannah/Simba/Tororo at KES 720 - 740/bag.\n3. **River Sand:** Sondu Miriu river tippers offload at Sotik market center (~KES 12,000 - 13,500 per 10-ton tipper or KES 1,200/ton).\n4. **Ballast:** Machine-crushed aggregate from Kaplong / Kimulot local quarries (~KES 1,300/ton).\n5. **Timber:** Mau / Bomet sawmills produce high-density cypress 4x2 rafters at KES 36 - 40/linear ft.\n6. **Local Labour Rates:** Lead mason: KES 1,000 - 1,200/day; Casual helper (mtu wa mkono): KES 500 - 600/day."
 };
 
 // 7. APP STATE
 let state = {
-  region: 'nairobi',
+  region: 'sotik',
   soundEnabled: true,
   nightMode: false,
   roofDesign: 'gable',
@@ -1260,6 +1280,96 @@ if ('serviceWorker' in navigator && window.location.protocol.startsWith('http'))
   });
 }
 
+// 15. SOTIK RENOVATION & 2m EXTENSION CALCULATOR
+window.updateSotikRenovationCalc = function() {
+  const extLength = parseFloat(document.getElementById('sotikExtLength')?.value || 2.0);
+  const bricksStock = parseInt(document.getElementById('sotikBricksStock')?.value || 2000);
+  const mabatiStock = parseInt(document.getElementById('sotikMabatiStock')?.value || 15);
+  const cementStock = parseInt(document.getElementById('sotikCementStock')?.value || 20);
+
+  // Geometry: 5m width x extLength
+  const newArea = 5.0 * extLength; // sqm
+  const totalArea = 30 + newArea; // 5x6m = 30sqm + newArea
+
+  // Walling: 2 side walls of extLength + 5m front wall with openings
+  const wallLinerMeters = (extLength * 2) + 5.0; // 9m for 2m ext
+  const bricksNeeded = Math.round(wallLinerMeters * 2.8 * 55); // ~1,386 bricks for 2m ext
+  const brickDeficit = Math.max(0, bricksNeeded - bricksStock);
+  const brickCost = brickDeficit * 7; // KES 7 in Sotik
+
+  // Cement:
+  // Extension foundation & 100mm slab: ~8 bags
+  // Mortar for walling: ~7 bags
+  // Monolithic ring beam (26m): ~7 bags
+  // Plastering new front & extensions: ~10 bags
+  const cementNeeded = Math.round(8 + (bricksNeeded / 200) + 7 + 10); // ~32 bags
+  const cementDeficit = Math.max(0, cementNeeded - cementStock);
+  const cementCost = cementDeficit * 730;
+
+  // Mabati: 20 sheets needed for full 5x8m mono-pitch
+  const mabatiNeeded = 20;
+  const mabatiDeficit = Math.max(0, mabatiNeeded - mabatiStock);
+  const mabatiCost = mabatiDeficit * 1380;
+
+  // Timber: 4x2 rafters (140 ft deficit @ 38) + 2x2 purlins (120 ft deficit @ 20)
+  const timberCost = (140 * 38) + (120 * 20); // KES 7,720
+
+  // Rebar: Y10 slab dowels (5 rods @ 950) + D8/R6 covered by stock
+  const rebarCost = 5 * 950; // KES 4,750
+
+  // Windows & Doors: 2 casement windows + 1 steel security door + timber slats
+  const fixturesCost = (2 * 5500) + 8500 + 8500; // KES 28,000
+
+  // Labour in Sotik: Lead Mason (12 days @ 1,100) + Carpenter (3 days @ 1,100) + 2 Helpers (12 days x 2 x 550)
+  const labourCost = (12 * 1100) + (3 * 1100) + (24 * 550); // KES 29,700
+
+  // Sand & Ballast deficit (Devin has 10t sand & 3t ballast in stock, need ~1t ballast extra)
+  const aggregatesCost = 1300;
+
+  // Transport & cartage in Sotik
+  const transportCost = 5000;
+
+  const totalMaterialsDeficit = brickCost + cementCost + mabatiCost + timberCost + rebarCost + fixturesCost + aggregatesCost;
+  const grandTotal = totalMaterialsDeficit + labourCost + transportCost;
+
+  // Update DOM elements
+  const elTotalArea = document.getElementById('sotikTotalArea');
+  const elBricksNeeded = document.getElementById('sotikBricksNeeded');
+  const elBrickDeficit = document.getElementById('sotikBrickDeficit');
+  const elBrickCost = document.getElementById('sotikBrickCost');
+  const elCementNeeded = document.getElementById('sotikCementNeeded');
+  const elCementDeficit = document.getElementById('sotikCementDeficit');
+  const elCementCost = document.getElementById('sotikCementCost');
+  const elMabatiDeficit = document.getElementById('sotikMabatiDeficit');
+  const elMabatiCost = document.getElementById('sotikMabatiCost');
+  const elMaterialsTotal = document.getElementById('sotikMaterialsTotal');
+  const elGrandTotal = document.getElementById('sotikGrandTotal');
+  const elSavings = document.getElementById('sotikTotalSavings');
+
+  if (elTotalArea) elTotalArea.innerText = totalArea.toFixed(1) + ' m²';
+  if (elBricksNeeded) elBricksNeeded.innerText = bricksNeeded + ' pcs';
+  if (elBrickDeficit) elBrickDeficit.innerText = brickDeficit + ' pcs (Stock Surplus: ' + Math.max(0, bricksStock - bricksNeeded) + ' pcs)';
+  if (elBrickCost) elBrickCost.innerText = 'KES ' + brickCost.toLocaleString();
+  if (elCementNeeded) elCementNeeded.innerText = cementNeeded + ' bags';
+  if (elCementDeficit) elCementDeficit.innerText = cementDeficit + ' bags';
+  if (elCementCost) elCementCost.innerText = 'KES ' + cementCost.toLocaleString();
+  if (elMabatiDeficit) elMabatiDeficit.innerText = mabatiDeficit + ' sheets';
+  if (elMabatiCost) elMabatiCost.innerText = 'KES ' + mabatiCost.toLocaleString();
+  if (elMaterialsTotal) elMaterialsTotal.innerText = 'KES ' + totalMaterialsDeficit.toLocaleString();
+  if (elGrandTotal) elGrandTotal.innerText = 'KES ' + grandTotal.toLocaleString();
+  if (elSavings) elSavings.innerText = 'KES ' + Math.max(0, 495000 - grandTotal).toLocaleString();
+};
+
+window.printSotikRenovationPlan = function() {
+  playSound('click');
+  window.print();
+};
+
 // Start app
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  if (typeof updateSotikRenovationCalc === 'function') {
+    updateSotikRenovationCalc();
+  }
+});
 
