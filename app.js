@@ -402,7 +402,7 @@ function saveState() {
 }
 
 // ROOF DESIGN SWITCHER (Gable vs 4 Mono-Pitch Variations)
-window.setRoofDesign = function(type) {
+window.setRoofDesign = function(type, userTriggered = false) {
   state.roofDesign = type;
   const isGable = type === 'gable';
   const isMono = !isGable;
@@ -456,8 +456,10 @@ window.setRoofDesign = function(type) {
 
   renderAll();
   saveState();
-  playSound(isMono ? 'fanfare' : 'click');
-  if (isMono) triggerConfetti();
+  if (userTriggered) {
+    playSound(isMono ? 'fanfare' : 'click');
+    if (isMono) triggerConfetti();
+  }
 };
 
 window.showMpVariant = function(variantId) {
@@ -474,7 +476,7 @@ window.showMpVariant = function(variantId) {
 };
 
 function syncRoofDesignWithLever(isChecked) {
-  setRoofDesign(isChecked ? 'skillion' : 'gable');
+  setRoofDesign(isChecked ? 'skillion' : 'gable', true);
 }
 
 // 8. AUDIO SYNTHESIZER (WEB AUDIO API)
@@ -482,17 +484,29 @@ let audioCtx = null;
 function getAudioContext() {
   if (!audioCtx) {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if (AudioContextClass) audioCtx = new AudioContextClass();
+    if (AudioContextClass) {
+      try {
+        audioCtx = new AudioContextClass();
+      } catch (e) {
+        console.log('Audio deferred');
+      }
+    }
   }
-  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
   return audioCtx;
 }
+
+// Unlock audio after first user gesture (satisfies browser autoplay policies)
+document.addEventListener('click', () => {
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(() => {});
+  }
+}, { once: true });
 
 function playSound(type) {
   if (!state.soundEnabled) return;
   try {
     const ctx = getAudioContext();
-    if (!ctx) return;
+    if (!ctx || ctx.state === 'suspended') return;
 
     if (type === 'click') {
       const osc = ctx.createOscillator();
@@ -1237,8 +1251,8 @@ window.dismissPwaBanner = function() {
   sessionStorage.setItem('jengasmart_pwa_dismissed', 'true');
 };
 
-// Register Service Worker for offline capability
-if ('serviceWorker' in navigator) {
+// Register Service Worker for offline capability (only on web origins, skip on local file:// to prevent origin null error)
+if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js')
       .then((reg) => console.log('JengaSmart Service Worker registered:', reg.scope))

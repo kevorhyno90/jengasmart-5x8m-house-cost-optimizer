@@ -10,7 +10,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <!-- PWA & Mobile App Meta Tags -->
-  <link rel="manifest" href="manifest.json">
+  <script>
+    if (window.location.protocol.startsWith('http')) {
+      const manifestLink = document.createElement('link');
+      manifestLink.rel = 'manifest';
+      manifestLink.href = 'manifest.json';
+      document.head.appendChild(manifestLink);
+    }
+  </script>
   <meta name="theme-color" content="#0284c7">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -164,19 +171,19 @@
           Selected Roof Architecture (5×8m):
         </span>
         <div class="roof-mode-options">
-          <button type="button" class="roof-mode-btn active" id="btnRoofGable" onclick="setRoofDesign('gable')">
+          <button type="button" class="roof-mode-btn active" id="btnRoofGable" onclick="setRoofDesign('gable', true)">
             🏛️ Traditional Gable (24 Sheets)
           </button>
-          <button type="button" class="roof-mode-btn" id="btnRoofSkillion" onclick="setRoofDesign('skillion')">
+          <button type="button" class="roof-mode-btn" id="btnRoofSkillion" onclick="setRoofDesign('skillion', true)">
             ⭐ 1. High-Front Skillion (20 Sheets)
           </button>
-          <button type="button" class="roof-mode-btn" id="btnRoofParapet" onclick="setRoofDesign('parapet')">
+          <button type="button" class="roof-mode-btn" id="btnRoofParapet" onclick="setRoofDesign('parapet', true)">
             🏢 2. Parapet Hidden Roof (20 Sheets)
           </button>
-          <button type="button" class="roof-mode-btn" id="btnRoofSplit" onclick="setRoofDesign('split')">
+          <button type="button" class="roof-mode-btn" id="btnRoofSplit" onclick="setRoofDesign('split', true)">
             🪟 3. Split Clerestory (21 Sheets)
           </button>
-          <button type="button" class="roof-mode-btn" id="btnRoofSide" onclick="setRoofDesign('side')">
+          <button type="button" class="roof-mode-btn" id="btnRoofSide" onclick="setRoofDesign('side', true)">
             📐 4. Side-to-Side Rake (20 Sheets)
           </button>
         </div>
