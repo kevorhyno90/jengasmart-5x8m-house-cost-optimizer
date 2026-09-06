@@ -157,6 +157,22 @@
         </div>
       </div>
 
+      <!-- Roof Design Mode Selector -->
+      <div class="roof-mode-selector-bar">
+        <span class="roof-mode-label">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Selected Roof Design:
+        </span>
+        <div class="roof-mode-options">
+          <button type="button" class="roof-mode-btn active" id="btnRoofGable" onclick="setRoofDesign('gable')">
+            🏛️ Traditional Gable (24 Mabati • 5 Ridge Caps)
+          </button>
+          <button type="button" class="roof-mode-btn" id="btnRoofMono" onclick="setRoofDesign('monopitch')">
+            ⭐ Modern Mono-Pitch (20 Mabati • 0 Ridge Caps • Saves KES 28,500)
+          </button>
+        </div>
+      </div>
+
       <div class="inventory-grid-wrapper">
         <table class="inventory-table" id="inventoryTable">
           <thead>
@@ -402,6 +418,7 @@
         </div>
         <div class="sub-nav-pills">
           <button class="plan-sub-btn active" data-view="floorplan">2D Floor Blueprint</button>
+          <button class="plan-sub-btn btn-highlight-monopitch" data-view="monopitch">⭐ Mono-Pitch 3D & Blueprint</button>
           <button class="plan-sub-btn" data-view="topdown3d">Top-Down 3D View</button>
           <button class="plan-sub-btn" data-view="entrance3d">Main Entrance View</button>
           <button class="plan-sub-btn" data-view="roofs">Roof Options (Gable vs Skillion)</button>
@@ -583,6 +600,171 @@
                   <li><strong>Total Roof Cost:</strong> ~KES 89,500 (Saves KES ~28,500!)</li>
                 </ul>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-view: Dedicated Modern Mono-Pitch Roof Blueprint & Engineering -->
+        <div id="subViewMonopitch" class="plan-sub-panel">
+          <div class="monopitch-blueprint-card">
+            <div class="monopitch-blueprint-header">
+              <div>
+                <span class="roof-badge badge-budget" style="margin-bottom: 0.25rem;">Modern Mono-Pitch Architecture • 5.0m × 8.0m House</span>
+                <h3 style="color: #fff; font-size: 1.2rem; margin: 0;">Devin's Single-Slope Shed Roof Engineering Blueprint</h3>
+              </div>
+              <button class="btn btn-primary" onclick="setRoofDesign('monopitch'); alert('⭐ Modern Mono-Pitch Roof activated! Mabati required reduced to 20 sheets (deficit only 5 sheets) and ridge caps eliminated.');" style="padding: 0.5rem 1rem;">
+                ⚡ Activate Mono-Pitch in Cost Minimizer
+              </button>
+            </div>
+
+            <!-- Photorealistic 3D Exterior Showcase -->
+            <div class="image-showcase" style="border-radius: 0;">
+              <img src="assets/roof_monopitch_3d.jpg" alt="Devin's 5x8m Modern Mono-Pitch House 3D Exterior Render" class="showcase-img" onerror="this.src='DOWNLOADS/JengaSmart-App/assets/roof_monopitch_3d.jpg'">
+              <div class="image-caption">
+                <strong>Photorealistic 3D Exterior View:</strong> Modern Kenyan single-slope mono-pitch roof with dark charcoal Box-Profile mabati, warm natural timber fascia cladding, expansive casement windows, and seamless rear rainwater drainage.
+              </div>
+            </div>
+
+            <!-- Vector Architectural Cross-Section Blueprint -->
+            <div style="padding: 1.5rem; background: #0b1120;">
+              <h4 style="color: #38bdf8; font-size: 1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>📐 Structural Elevation & Cross-Section Drawing (Scale 1:50)</span>
+              </h4>
+              <svg class="monopitch-svg" viewBox="0 0 850 420" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="mpGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                  </pattern>
+                  <linearGradient id="wallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#334155"/>
+                    <stop offset="100%" stop-color="#1e293b"/>
+                  </linearGradient>
+                </defs>
+                <rect width="850" height="420" fill="#020617"/>
+                <rect width="850" height="420" fill="url(#mpGrid)"/>
+
+                <!-- Ground Level Datum -->
+                <line x1="40" y1="360" x2="810" y2="360" stroke="#64748b" stroke-width="3"/>
+                <text x="50" y="380" fill="#94a3b8" font-size="12" font-family="monospace">±0.00m FINISHED GROUND GRADE</text>
+
+                <!-- Concrete Plinth & Floor Slab -->
+                <rect x="150" y="335" width="550" height="25" fill="#475569" stroke="#94a3b8" stroke-width="1.5"/>
+                <text x="425" y="352" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle" font-family="sans-serif">+0.30m FINISHED FLOOR SLAB (100mm Concrete + 8 Rolls DPM)</text>
+
+                <!-- Front Wall (Left side, Height 3.60m from slab) -->
+                <rect x="170" y="119" width="30" height="216" fill="url(#wallGrad)" stroke="#38bdf8" stroke-width="2"/>
+                <rect x="170" y="119" width="30" height="24" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="185" y="135" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">BEAM</text>
+
+                <!-- Rear Wall (Right side, Height 2.85m from slab) -->
+                <rect x="650" y="164" width="30" height="171" fill="url(#wallGrad)" stroke="#38bdf8" stroke-width="2"/>
+                <rect x="650" y="164" width="30" height="24" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="665" y="180" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">BEAM</text>
+
+                <!-- Front Window -->
+                <rect x="170" y="170" width="30" height="90" fill="#0284c7" fill-opacity="0.3" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="185" y="220" fill="#38bdf8" font-size="9" text-anchor="middle">WIN</text>
+
+                <!-- Rear Window -->
+                <rect x="650" y="210" width="30" height="60" fill="#0284c7" fill-opacity="0.3" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="665" y="245" fill="#38bdf8" font-size="9" text-anchor="middle">WIN</text>
+
+                <!-- Single Sloping Timber Rafter 4"x2" -->
+                <polygon points="115,106 705,166 705,178 115,118" fill="#d97706" stroke="#b45309" stroke-width="1.5"/>
+                <text x="390" y="130" fill="#fbbf24" font-size="11" font-weight="bold" font-family="monospace" transform="rotate(5.8 390 130)">4"×2" CYPRESS TIMBER RAFTER @ 600mm c/c (Span: 5.6m)</text>
+
+                <!-- Purlins 2"x2" spaced at 900mm -->
+                <rect x="135" y="100" width="12" height="8" fill="#f59e0b" stroke="#78350f" transform="rotate(5.8 135 100)"/>
+                <rect x="230" y="110" width="12" height="8" fill="#f59e0b" stroke="#78350f" transform="rotate(5.8 230 110)"/>
+                <rect x="325" y="120" width="12" height="8" fill="#f59e0b" stroke="#78350f" transform="rotate(5.8 325 120)"/>
+                <rect x="420" y="130" width="12" height="8" fill="#f59e0b" stroke="#78350f" transform="rotate(5.8 420 130)"/>
+                <rect x="515" y="140" width="12" height="8" fill="#f59e0b" stroke="#78350f" transform="rotate(5.8 515 140)"/>
+                <rect x="610" y="150" width="12" height="8" fill="#f59e0b" stroke="#78350f" transform="rotate(5.8 610 150)"/>
+                <rect x="690" y="158" width="12" height="8" fill="#f59e0b" stroke="#78350f" transform="rotate(5.8 690 158)"/>
+
+                <!-- Iron Sheet (Mabati Box Profile G28 Charcoal) -->
+                <line x1="110" y1="102" x2="715" y2="162" stroke="#0ea5e9" stroke-width="5" stroke-linecap="round"/>
+                <text x="410" y="98" fill="#38bdf8" font-size="12" font-weight="bold" font-family="sans-serif" transform="rotate(5.8 410 98)">GAUGE 28 BOX PROFILE MABATI (20 SHEETS TOTAL)</text>
+
+                <!-- Front Fascia Board (1"x8") -->
+                <rect x="108" y="101" width="8" height="35" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+                <text x="75" y="120" fill="#cbd5e1" font-size="10" font-family="monospace">FASCIA 1"×8"</text>
+
+                <!-- Rear Rainwater Gutter & Downpipe -->
+                <path d="M 715 162 Q 722 175 722 185 L 722 340" fill="none" stroke="#10b981" stroke-width="3.5"/>
+                <circle cx="722" cy="180" r="8" fill="#10b981" fill-opacity="0.3" stroke="#10b981" stroke-width="2"/>
+                <text x="735" y="175" fill="#34d399" font-size="10" font-weight="bold">PVC GUTTER</text>
+                <text x="735" y="240" fill="#34d399" font-size="9">DOWNPIPE TO</text>
+                <text x="735" y="255" fill="#34d399" font-size="9" font-weight="bold">WATER TANK</text>
+
+                <!-- Dimensions -->
+                <line x1="130" y1="335" x2="130" y2="119" stroke="#38bdf8" stroke-dasharray="4,4" stroke-width="1.5"/>
+                <text x="120" y="225" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="end" font-family="monospace">3.60 m FRONT WALL</text>
+
+                <line x1="700" y1="335" x2="700" y2="164" stroke="#38bdf8" stroke-dasharray="4,4" stroke-width="1.5"/>
+                <text x="710" y="260" fill="#38bdf8" font-size="12" font-weight="bold" font-family="monospace">2.85 m REAR WALL</text>
+
+                <line x1="170" y1="164" x2="650" y2="164" stroke="rgba(255,255,255,0.2)" stroke-dasharray="3,3"/>
+                <text x="420" y="180" fill="#cbd5e1" font-size="11" font-family="sans-serif">Slope Rise: 0.75m Fall over 5.0m Building Span (Angle ~ 10°)</text>
+
+                <line x1="170" y1="315" x2="680" y2="315" stroke="#f1f5f9" stroke-width="1.5"/>
+                <polygon points="170,312 170,318 162,315" fill="#fff"/>
+                <polygon points="680,312 680,318 688,315" fill="#fff"/>
+                <text x="425" y="310" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="monospace">5.00 METERS SPAN (INTERIOR CLEAR 4.60m)</text>
+              </svg>
+            </div>
+
+            <!-- Itemized Technical Specs Grid -->
+            <div class="monopitch-specs-grid" style="padding: 1.5rem; background: var(--bg-card);">
+              <div class="monopitch-spec-box">
+                <h4>🧱 1. Wall Elevation & Ring Beam</h4>
+                <ul>
+                  <li><strong>Front Wall Ring Beam:</strong> Cast at <strong>+3.60 m</strong> above floor slab.</li>
+                  <li><strong>Rear Wall Ring Beam:</strong> Cast at <strong>+2.85 m</strong> above floor slab.</li>
+                  <li><strong>Side Gable Rake:</strong> Raked stepped masonry (sloping 10°) topped with a 150mm sloping reinforced concrete coping beam.</li>
+                  <li><strong>Wall Anchors:</strong> 25mm hoop iron straps embedded into ring beam at 1.2m intervals to tie rafters securely against Kenyan gusts.</li>
+                </ul>
+              </div>
+
+              <div class="monopitch-spec-box">
+                <h4>🪵 2. Timber Rafter & Purlin Schedule</h4>
+                <ul>
+                  <li><strong>Rafters:</strong> 4"×2" Treated Cypress (10 pieces of 20ft length = ~410 ft total).</li>
+                  <li><strong>Rafter Spacing:</strong> 600mm centers with intermediate tie collars across the 5.0m room span.</li>
+                  <li><strong>Purlins:</strong> 2"×2" Treated Cypress battens spaced at 900mm centers (~390 ft total).</li>
+                  <li><strong>Fascia Board:</strong> 1"×8" treated timber along front (8.5m) and sides.</li>
+                </ul>
+              </div>
+
+              <div class="monopitch-spec-box">
+                <h4>🛡️ 3. Iron Sheets (Mabati) & Hardware</h4>
+                <ul>
+                  <li><strong>Total Sheets Needed:</strong> <strong>20 sheets</strong> of Gauge 28 Box Profile (vs 24 for Gable).</li>
+                  <li><strong>Devin's Current Stock:</strong> 15 sheets on site.</li>
+                  <li><strong>Deficit to Buy:</strong> <strong>Only 5 more sheets!</strong> (Reduces your deficit by 4 full sheets!).</li>
+                  <li><strong>Ridge Caps (Marangi):</strong> <strong>0 pieces needed!</strong> (Mono-pitch has NO apex ridge, saving KES 4,500!).</li>
+                </ul>
+              </div>
+
+              <div class="monopitch-spec-box">
+                <h4>💧 4. Rainwater Harvesting & Drainage</h4>
+                <ul>
+                  <li><strong>Single Slope Advantage:</strong> 100% of rainwater flows toward the rear wall.</li>
+                  <li><strong>Gutter Length:</strong> Only one 8.5m PVC gutter run (saves 50% vs dual front/rear gutters).</li>
+                  <li><strong>Water Tank Connection:</strong> Direct single downpipe to a 5,000L or 10,000L plastic water storage tank for clean gravity supply.</li>
+                  <li><strong>Zero Splash on Porch:</strong> Front entrance veranda remains completely dry during heavy downpours.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div style="padding: 1rem 1.5rem; background: rgba(16, 185, 129, 0.1); border-top: 1px solid rgba(16, 185, 129, 0.3); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <strong style="color: #34d399; font-size: 1.05rem;">Total Direct Savings with Mono-Pitch: ~KES 28,500</strong>
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">Saves 4 iron sheets + 5 ridge caps + 110 ft timber trusses + dual guttering labor.</p>
+              </div>
+              <button class="btn btn-primary" onclick="setRoofDesign('monopitch'); alert('✓ Modern Mono-Pitch Roof selected! Inventory deficit updated to only 5 sheets.');">
+                Confirm Mono-Pitch Roof (20 Sheets)
+              </button>
             </div>
           </div>
         </div>
@@ -804,6 +986,7 @@
           </div>
 
           <div class="suggestion-chips">
+            <button class="chip-btn" onclick="askPreset('monopitch')">📐 Mono-Pitch Roof Blueprint & Rules</button>
             <button class="chip-btn" onclick="askPreset('quarrydust')">🪨 Quarry Dust vs Sand Rules</button>
             <button class="chip-btn" onclick="askPreset('silt')">🧪 Sand Silt Bottle Test</button>
             <button class="chip-btn" onclick="askPreset('curing')">💧 Concrete 7-Day Curing</button>

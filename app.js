@@ -353,6 +353,7 @@ const BATCH_RATIOS = {
 const COPILOT_ANSWERS = {
   silt: "🧪 **How to do the Sand Silt Bottle Test on Site:**\n1. Take a transparent glass bottle (e.g. 500ml water bottle).\n2. Fill 1/3 with your delivered river sand.\n3. Add clean water until 3/4 full, add 1 teaspoon salt, and shake vigorously for 1 minute.\n4. Let it settle on a flat surface for 3 hours.\n5. You will see clean sand at the bottom and a darker muddy layer (silt/clay) on top.\n6. **Rule:** If the silt layer is thicker than 6% of the total sand height, REJECT the lorry! High silt causes crumbly plaster and cracked walls.",
   quarrydust: "🪨 **Can Devin Use Quarry Dust Instead of Sand? YES, BUT WITH RULES:**\n\n1. **100% Replacement for Hardcore Blinding:** YES! Use pure quarry dust (2-3 inches) over your foundation hardcore before laying your 8 rolls of DPM plastic. Saves KES ~12,000.\n\n2. **50/50 Blend for Floor Slab (100mm):** Mix 1 Wheelbarrow Quarry Dust + 1 Wheelbarrow River Sand for every 1 bag of cement + 4 Wheelbarrows ballast. Gives high strength and zero shrinkage cracks!\n\n3. **50/50 Blend for Brick Mortar:** Mix 1.5 Wheelbarrows Quarry Dust + 1.5 Wheelbarrows River Sand per 1 bag cement. Smooth, strong bond for your 2,000 bricks.\n\n4. **Wall Plastering WARNING:** Do NOT use 100% quarry dust for wall plaster! Its fine powder causes hairline drying cracks. For plaster, use at least 70% river sand or wash the quarry dust to remove dust powder.",
+  monopitch: "📐 **Devin's Modern Mono-Pitch (Skillion) Roof Engineering Guide:**\n\n1. **Why It Saves Money:**\n• You only need 20 mabati sheets instead of 24 (since you have 15, your deficit is only 5 sheets!).\n• 0 ridge caps (marangi) needed—eliminates leak-prone roof apex seams!\n• Saves 30% on timber rafters (~KES 18,000 saved).\n• Single rear gutter line instead of dual gutters.\n\n2. **Wall Heights & Slope Ratio:**\n• Front wall ring beam: +3.60 m above floor slab.\n• Rear wall ring beam: +2.85 m above floor slab.\n• Slope fall: 0.75m rise over 5.0m span (~10° pitch angle). This guarantees rapid water runoff without splashing back.\n\n3. **Wind Anchorage Warning (Kenya Building Code):**\n• Mono-pitch roofs experience higher aerodynamic wind uplift on the high front side.\n• **Fundi Directive:** Do NOT just nail rafters to the wall plate. Anchor each 4x2 rafter into the concrete ring beam using **25mm hoop iron straps** cast directly into the beam!",
   curing: "💧 **Devin's 7-Day Concrete Curing Directive:**\n• Concrete doesn't 'dry' to get hard—it cures through a chemical reaction (hydration) that demands water.\n• For the first 7 days after casting your floor slab or ring beam, have your fundi spray water twice daily (morning & evening) or cover the slab with wet gunny bags/sand berms.\n• **Fact:** Skipping curing cuts concrete strength by over 45% and causes spiderweb surface cracks!",
   theft: "🔒 **Preventing Cement & Rebar Leakage in Kenya:**\n1. Count every single bag offloaded from the lorry yourself or have a trusted relative present.\n2. Require the fundi to return the **EMPTY paper bags** every evening before paying daily wages (ensures bags weren't resold or taken off site).\n3. Keep cement off the ground on timber pallets covered with your DPM polythene rolls to prevent rising soil moisture from hardening bags into stones.",
   bricks: "🧱 **Utilizing Devin's 2,000 Bricks Efficiently:**\n• Your 2,000 bricks are ideally suited for the **substructure foundation footing wall** (from strip footing up to DPC floor level).\n• Because foundation bricks are buried under backfill, you can use these 2,000 bricks right away in Phase 2.\n• For Phase 3 superstructure (walling to ring beam), you will need ~5,000 more bricks (~KES 50,000) or 480 quarry machine-cut stones (9\"x9\")."
@@ -363,6 +364,7 @@ let state = {
   region: 'nairobi',
   soundEnabled: true,
   nightMode: false,
+  roofDesign: 'gable',
   materials: JSON.parse(JSON.stringify(DEFAULT_MATERIALS)),
   completedPhases: [1],
   curingDays: [1, 2],
@@ -384,6 +386,7 @@ function loadState() {
       const parsed = JSON.parse(saved);
       if (parsed.materials) state.materials = parsed.materials;
       if (parsed.region) state.region = parsed.region;
+      if (parsed.roofDesign) state.roofDesign = parsed.roofDesign;
       if (parsed.completedPhases) state.completedPhases = parsed.completedPhases;
       if (parsed.activeLevers) state.activeLevers = parsed.activeLevers;
       if (parsed.curingDays) state.curingDays = parsed.curingDays;
@@ -396,6 +399,63 @@ function loadState() {
 
 function saveState() {
   localStorage.setItem('jengasmart_devin_state', JSON.stringify(state));
+}
+
+// ROOF DESIGN SWITCHER (Gable vs Mono-Pitch / Skillion)
+window.setRoofDesign = function(type) {
+  state.roofDesign = type;
+  const isMono = type === 'monopitch';
+
+  const btnGable = document.getElementById('btnRoofGable');
+  const btnMono = document.getElementById('btnRoofMono');
+  if (btnGable) btnGable.classList.toggle('active', !isMono);
+  if (btnMono) btnMono.classList.toggle('active', isMono);
+
+  // Adjust materials array for Devin
+  const ironSheetItem = state.materials.find(m => m.id === 'ironSheets');
+  const ridgeCapItem = state.materials.find(m => m.id === 'ridgeCaps');
+  const timberRaftersItem = state.materials.find(m => m.id === 'timberRafters');
+  const timberPurlinsItem = state.materials.find(m => m.id === 'timberPurlins');
+
+  if (ironSheetItem) ironSheetItem.required = isMono ? 20 : 24;
+  if (ridgeCapItem) ridgeCapItem.required = isMono ? 0 : 5;
+  if (timberRaftersItem) timberRaftersItem.required = isMono ? 410 : 520;
+  if (timberPurlinsItem) timberPurlinsItem.required = isMono ? 390 : 480;
+
+  // Sync with lever checkbox if present
+  const skillionLever = document.getElementById('leverSkillionRoof');
+  if (skillionLever) {
+    skillionLever.checked = isMono;
+    state.activeLevers.leverSkillionRoof = isMono;
+  }
+
+  renderInventory();
+  renderCalculations();
+  renderShoppingList();
+  saveState();
+  playSound(isMono ? 'fanfare' : 'click');
+  if (isMono) triggerConfetti();
+};
+
+function syncRoofDesignWithLever(isChecked) {
+  state.roofDesign = isChecked ? 'monopitch' : 'gable';
+  const btnGable = document.getElementById('btnRoofGable');
+  const btnMono = document.getElementById('btnRoofMono');
+  if (btnGable) btnGable.classList.toggle('active', !isChecked);
+  if (btnMono) btnMono.classList.toggle('active', isChecked);
+
+  const ironSheetItem = state.materials.find(m => m.id === 'ironSheets');
+  const ridgeCapItem = state.materials.find(m => m.id === 'ridgeCaps');
+  const timberRaftersItem = state.materials.find(m => m.id === 'timberRafters');
+  const timberPurlinsItem = state.materials.find(m => m.id === 'timberPurlins');
+
+  if (ironSheetItem) ironSheetItem.required = isChecked ? 20 : 24;
+  if (ridgeCapItem) ridgeCapItem.required = isChecked ? 0 : 5;
+  if (timberRaftersItem) timberRaftersItem.required = isChecked ? 410 : 520;
+  if (timberPurlinsItem) timberPurlinsItem.required = isChecked ? 390 : 480;
+
+  renderInventory();
+  renderShoppingList();
 }
 
 // 8. AUDIO SYNTHESIZER (WEB AUDIO API)
@@ -592,6 +652,7 @@ function init() {
       btn.classList.add('active');
       const view = btn.getAttribute('data-view');
       if (view === 'floorplan') document.getElementById('subViewFloorplan')?.classList.add('active');
+      if (view === 'monopitch') document.getElementById('subViewMonopitch')?.classList.add('active');
       if (view === 'topdown3d') document.getElementById('subViewTopdown3d')?.classList.add('active');
       if (view === 'entrance3d') document.getElementById('subViewEntrance3d')?.classList.add('active');
       if (view === 'roofs') document.getElementById('subViewRoofs')?.classList.add('active');
@@ -608,11 +669,22 @@ function init() {
     }
     checkbox.addEventListener('change', (e) => {
       state.activeLevers[id] = e.target.checked;
+      if (id === 'leverSkillionRoof') {
+        syncRoofDesignWithLever(e.target.checked);
+      }
       renderCalculations();
       saveState();
       playSound('chime');
     });
   });
+
+  // Sync roof design toggle button state on initial load
+  if (state.roofDesign === 'monopitch' || state.activeLevers.leverSkillionRoof) {
+    const btnGable = document.getElementById('btnRoofGable');
+    const btnMono = document.getElementById('btnRoofMono');
+    if (btnGable) btnGable.classList.remove('active');
+    if (btnMono) btnMono.classList.add('active');
+  }
 
   // Export / Print button
   const exportBtn = document.getElementById('exportShoppingListBtn');
@@ -1023,7 +1095,9 @@ window.sendChatMessage = function() {
     let reply = "Pole Devin, I didn't recognize that specific question. Try asking about 'sand silt test', 'concrete curing', '2,000 bricks', or 'fundi theft control'!";
     const lower = msg.toLowerCase();
 
-    if (lower.includes('quarry') || lower.includes('dust') || lower.includes('vumbi')) {
+    if (lower.includes('mono') || lower.includes('skillion') || lower.includes('shed') || lower.includes('pitch')) {
+      reply = COPILOT_ANSWERS.monopitch;
+    } else if (lower.includes('quarry') || lower.includes('dust') || lower.includes('vumbi')) {
       reply = COPILOT_ANSWERS.quarrydust;
     } else if (lower.includes('silt') || lower.includes('sand') || lower.includes('soil')) {
       reply = COPILOT_ANSWERS.silt;
@@ -1053,6 +1127,7 @@ window.askPreset = function(type) {
   if (!box) return;
 
   const questions = {
+    monopitch: "How does the Mono-Pitch roof work and how do we construct it?",
     quarrydust: "Can I use quarry dust instead of river sand?",
     silt: "How do I test my river sand for silt on site?",
     curing: "What is the 7-day concrete curing rule?",

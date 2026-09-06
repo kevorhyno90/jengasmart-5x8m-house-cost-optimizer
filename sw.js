@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jengasmart-v1';
+const CACHE_NAME = 'jengasmart-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -12,6 +12,7 @@ const ASSETS_TO_CACHE = [
   './assets/main_entrance.jpg',
   './assets/roof_gable.jpg',
   './assets/roof_skillion.jpg',
+  './assets/roof_monopitch_3d.jpg',
   './house_plans_dossier.html'
 ];
 
