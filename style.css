@@ -1259,6 +1259,52 @@ input:checked + .slider:before {
   gap: 0.75rem;
 }
 
+/* Mono-Pitch Variant Sub-Nav */
+.mp-variant-nav {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(11, 17, 32, 0.9);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.mp-variant-btn {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.mp-variant-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  color: #fff;
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.mp-variant-btn.active {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #fff;
+  border-color: #38bdf8;
+  box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+}
+
+.mp-variant-panel {
+  display: none;
+}
+
+.mp-variant-panel.active {
+  display: block;
+}
+
 .monopitch-svg {
   width: 100%;
   height: auto;
