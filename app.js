@@ -1,6 +1,6 @@
 /**
- * JengaSmart Kenya — 5x8m House Cost Optimizer & Build Manager
- * Core Application Logic & Calculation Engine
+ * JengaSmart Kenya — Devin's Special Edition
+ * Core Application Logic, Calculation Engine, Audio Synthesizer & AI Copilot
  */
 
 // 1. REGIONAL UNIT RATES (KES)
@@ -15,8 +15,8 @@ const REGIONAL_RATES = {
     rebarR6: 420,
     bindingWire: 250,
     dpmRoll: 1800,
-    timber2x4: 65, // per foot
-    timber2x2: 35, // per foot
+    timber2x4: 65,
+    timber2x2: 35,
     roofingNails: 280,
     wireNails: 180,
     ridgeCap: 700,
@@ -24,7 +24,7 @@ const REGIONAL_RATES = {
     flushDoor: 4500
   },
   western: {
-    brick: 8, // Western clay kilns cheaper
+    brick: 8,
     cement: 820,
     sandTon: 1400,
     ballastTon: 1600,
@@ -51,7 +51,7 @@ const REGIONAL_RATES = {
     rebarR6: 430,
     bindingWire: 250,
     dpmRoll: 1850,
-    timber2x4: 50, // Rift timber close to sawmills
+    timber2x4: 50,
     timber2x2: 28,
     roofingNails: 280,
     wireNails: 180,
@@ -87,7 +87,7 @@ const DEFAULT_MATERIALS = [
     sub: 'Substructure & Superstructure walling up to 2.8m',
     unit: 'pcs',
     required: 7000,
-    inStock: 2000, // User preloaded inventory
+    inStock: 2000, // Devin's preloaded inventory
     rateKey: 'brick',
     defaultRate: 10
   },
@@ -97,7 +97,7 @@ const DEFAULT_MATERIALS = [
     sub: 'Roofing cover for 8.9m x 6.0m gable pitch',
     unit: 'sheets',
     required: 24,
-    inStock: 15, // User preloaded inventory
+    inStock: 15, // Devin's preloaded inventory
     rateKey: 'ironSheet',
     defaultRate: 1450
   },
@@ -107,7 +107,7 @@ const DEFAULT_MATERIALS = [
     sub: 'Footing, slab, ring beam, mortar & plaster',
     unit: 'bags',
     required: 90,
-    inStock: 20, // User preloaded inventory
+    inStock: 20, // Devin's preloaded inventory
     rateKey: 'cement',
     defaultRate: 780
   },
@@ -117,7 +117,7 @@ const DEFAULT_MATERIALS = [
     sub: 'Concrete casting, mortar mix & interior plaster',
     unit: 'tons',
     required: 17,
-    inStock: 10, // User preloaded inventory
+    inStock: 10, // Devin's preloaded inventory
     rateKey: 'sandTon',
     defaultRate: 1600
   },
@@ -127,7 +127,7 @@ const DEFAULT_MATERIALS = [
     sub: 'Foundation footing, 100mm floor slab & ring beam',
     unit: 'tons',
     required: 11,
-    inStock: 3, // User preloaded inventory
+    inStock: 3, // Devin's preloaded inventory
     rateKey: 'ballastTon',
     defaultRate: 1500
   },
@@ -137,7 +137,7 @@ const DEFAULT_MATERIALS = [
     sub: 'Ring beam main tension bars (4 longitudinal bars)',
     unit: 'pcs',
     required: 14,
-    inStock: 14, // User preloaded (fully covered)
+    inStock: 14, // Devin's preloaded (fully covered)
     rateKey: 'rebarD8',
     defaultRate: 750
   },
@@ -147,7 +147,7 @@ const DEFAULT_MATERIALS = [
     sub: 'Ring beam stirrup rings @ 200mm centers',
     unit: 'pcs',
     required: 10,
-    inStock: 10, // User preloaded (fully covered)
+    inStock: 10, // Devin's preloaded (fully covered)
     rateKey: 'rebarR6',
     defaultRate: 420
   },
@@ -157,7 +157,7 @@ const DEFAULT_MATERIALS = [
     sub: 'Tying rebar intersections and stirrups',
     unit: 'kg',
     required: 3,
-    inStock: 3, // User preloaded (fully covered)
+    inStock: 3, // Devin's preloaded (fully covered)
     rateKey: 'bindingWire',
     defaultRate: 250
   },
@@ -167,7 +167,7 @@ const DEFAULT_MATERIALS = [
     sub: 'Damp-proof membrane under ground floor slab',
     unit: 'rolls',
     required: 8,
-    inStock: 8, // User preloaded (fully covered)
+    inStock: 8, // Devin's preloaded (fully covered)
     rateKey: 'dpmRoll',
     defaultRate: 1800
   },
@@ -283,7 +283,7 @@ const CONSTRUCTION_PHASES = [
   }
 ];
 
-// Room Details Data for Visualizer
+// 4. ROOM DETAILS DATA FOR BLUEPRINT
 const ROOM_DATA = {
   master: {
     title: "Master Bedroom",
@@ -327,11 +327,44 @@ const ROOM_DATA = {
   }
 };
 
-// 4. APP STATE
+// 5. KENYA DEBE BATCHING RATIOS
+const BATCH_RATIOS = {
+  concrete: {
+    cement: "1 Bag (50kg)",
+    sand: "2 Wheelbarrows (4 Debes)",
+    ballast: "4 Wheelbarrows (8 Debes)",
+    note: "💡 Standard 1:2:4 Structural Mix for Devin's 100mm floor slab & 200mm ring beam. Water limit: Max 1.5 Debes (30 Liters) per bag to prevent slab shrinkage cracks."
+  },
+  mortar: {
+    cement: "1 Bag (50kg)",
+    sand: "3 Wheelbarrows (6 Debes)",
+    ballast: "0 (None for mortar)",
+    note: "💡 1:4 Brick Laying Mortar Mix for Devin's clay bricks. Tip: Soak the clay bricks in water 15 minutes before laying so they don't suck moisture out of the cement mortar!"
+  },
+  plaster: {
+    cement: "1 Bag (50kg)",
+    sand: "2.5 Wheelbarrows (5 Debes of fine screened sand)",
+    ballast: "0 (None)",
+    note: "💡 1:3 Plaster Mix. Sand MUST be sieved through fine wire mesh to remove pebbles. Add waterproof bonding agent (e.g. Sika-1 or Pudlo) for external ground-splash protection."
+  }
+};
+
+// 6. AI COPILOT KNOWLEDGE BASE FOR DEVIN
+const COPILOT_ANSWERS = {
+  silt: "🧪 **How to do the Sand Silt Bottle Test on Site:**\n1. Take a transparent glass bottle (e.g. 500ml water bottle).\n2. Fill 1/3 with your delivered river sand.\n3. Add clean water until 3/4 full, add 1 teaspoon salt, and shake vigorously for 1 minute.\n4. Let it settle on a flat surface for 3 hours.\n5. You will see clean sand at the bottom and a darker muddy layer (silt/clay) on top.\n6. **Rule:** If the silt layer is thicker than 6% of the total sand height, REJECT the lorry! High silt causes crumbly plaster and cracked walls.",
+  curing: "💧 **Devin's 7-Day Concrete Curing Directive:**\n• Concrete doesn't 'dry' to get hard—it cures through a chemical reaction (hydration) that demands water.\n• For the first 7 days after casting your floor slab or ring beam, have your fundi spray water twice daily (morning & evening) or cover the slab with wet gunny bags/sand berms.\n• **Fact:** Skipping curing cuts concrete strength by over 45% and causes spiderweb surface cracks!",
+  theft: "🔒 **Preventing Cement & Rebar Leakage in Kenya:**\n1. Count every single bag offloaded from the lorry yourself or have a trusted relative present.\n2. Require the fundi to return the **EMPTY paper bags** every evening before paying daily wages (ensures bags weren't resold or taken off site).\n3. Keep cement off the ground on timber pallets covered with your DPM polythene rolls to prevent rising soil moisture from hardening bags into stones.",
+  bricks: "🧱 **Utilizing Devin's 2,000 Bricks Efficiently:**\n• Your 2,000 bricks are ideally suited for the **substructure foundation footing wall** (from strip footing up to DPC floor level).\n• Because foundation bricks are buried under backfill, you can use these 2,000 bricks right away in Phase 2.\n• For Phase 3 superstructure (walling to ring beam), you will need ~5,000 more bricks (~KES 50,000) or 480 quarry machine-cut stones (9\"x9\")."
+};
+
+// 7. APP STATE
 let state = {
   region: 'nairobi',
+  soundEnabled: true,
+  nightMode: false,
   materials: JSON.parse(JSON.stringify(DEFAULT_MATERIALS)),
-  completedPhases: [1], // phase 1 or none by default
+  completedPhases: [1],
+  curingDays: [1, 2],
   activeLevers: {
     leverSkillionRoof: false,
     leverQuarryDirect: true,
@@ -342,9 +375,8 @@ let state = {
   }
 };
 
-// Load saved state from localStorage if available
 function loadState() {
-  const saved = localStorage.getItem('jengasmart_5x8m_state');
+  const saved = localStorage.getItem('jengasmart_devin_state');
   if (saved) {
     try {
       const parsed = JSON.parse(saved);
@@ -352,18 +384,143 @@ function loadState() {
       if (parsed.region) state.region = parsed.region;
       if (parsed.completedPhases) state.completedPhases = parsed.completedPhases;
       if (parsed.activeLevers) state.activeLevers = parsed.activeLevers;
+      if (parsed.curingDays) state.curingDays = parsed.curingDays;
+      if (parsed.soundEnabled !== undefined) state.soundEnabled = parsed.soundEnabled;
     } catch (e) {
-      console.warn('Could not parse saved state:', e);
+      console.warn('Could not parse state:', e);
     }
   }
 }
 
 function saveState() {
-  localStorage.setItem('jengasmart_5x8m_state', JSON.stringify(state));
+  localStorage.setItem('jengasmart_devin_state', JSON.stringify(state));
 }
 
-// 5. DOM ELEMENTS
+// 8. AUDIO SYNTHESIZER (WEB AUDIO API)
+let audioCtx = null;
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) audioCtx = new AudioContextClass();
+  }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function playSound(type) {
+  if (!state.soundEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    if (type === 'click') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.05);
+    } else if (type === 'chime') {
+      const now = ctx.currentTime;
+      [523.25, 659.25, 783.99].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+        gain.gain.setValueAtTime(0.12, now + idx * 0.06);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.18);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.06);
+        osc.stop(now + idx * 0.06 + 0.18);
+      });
+    } else if (type === 'fanfare') {
+      const now = ctx.currentTime;
+      [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+        gain.gain.setValueAtTime(0.15, now + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.35);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.08);
+        osc.stop(now + idx * 0.08 + 0.35);
+      });
+    }
+  } catch (e) {
+    // Silent fail for audio
+  }
+}
+
+// 9. CONFETTI CANNON CELEBRATION
+function triggerConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  const colors = ['#10b981', '#38bdf8', '#fbbf24', '#a855f7', '#f43f5e', '#ffffff'];
+
+  for (let i = 0; i < 120; i++) {
+    particles.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      vx: (Math.random() - 0.5) * 18,
+      vy: (Math.random() - 0.8) * 16,
+      size: Math.random() * 8 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 1,
+      rotation: Math.random() * 360,
+      vRot: (Math.random() - 0.5) * 10
+    });
+  }
+
+  let animationFrame;
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let activeCount = 0;
+
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.4; // gravity
+      p.rotation += p.vRot;
+      p.alpha -= 0.008;
+
+      if (p.alpha > 0) {
+        activeCount++;
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+        ctx.restore();
+      }
+    });
+
+    if (activeCount > 0) {
+      animationFrame = requestAnimationFrame(render);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      cancelAnimationFrame(animationFrame);
+    }
+  }
+  render();
+}
+
+// 10. DOM REFERENCES
 const regionSelect = document.getElementById('regionSelect');
+const soundToggleBtn = document.getElementById('soundToggleBtn');
+const whatsappShareBtn = document.getElementById('whatsappShareBtn');
 const inventoryBody = document.getElementById('inventoryBody');
 const grossTotalDisplay = document.getElementById('grossTotalDisplay');
 const savedTotalDisplay = document.getElementById('savedTotalDisplay');
@@ -378,12 +535,13 @@ const phasesTimeline = document.getElementById('phasesTimeline');
 const buildProgressBar = document.getElementById('buildProgressBar');
 const buildProgressPercent = document.getElementById('buildProgressPercent');
 const shoppingListPrintable = document.getElementById('shoppingListPrintable');
+const curingDaysGrid = document.getElementById('curingDaysGrid');
 
-// 6. INITIALIZATION & RENDERING
+// 11. INITIALIZATION
 function init() {
   loadState();
 
-  // Set region dropdown
+  // Region dropdown
   if (regionSelect) {
     regionSelect.value = state.region;
     regionSelect.addEventListener('change', (e) => {
@@ -391,10 +549,27 @@ function init() {
       updateRatesForRegion();
       renderAll();
       saveState();
+      playSound('click');
     });
   }
 
-  // Bind Tab Navigation
+  // Sound Toggle Button
+  if (soundToggleBtn) {
+    soundToggleBtn.addEventListener('click', () => {
+      state.soundEnabled = !state.soundEnabled;
+      soundToggleBtn.textContent = state.soundEnabled ? '🔊 Sound ON' : '🔇 Sound OFF';
+      soundToggleBtn.className = `btn btn-sound ${state.soundEnabled ? 'sound-on' : ''}`;
+      playSound('click');
+      saveState();
+    });
+  }
+
+  // WhatsApp Share Button
+  if (whatsappShareBtn) {
+    whatsappShareBtn.addEventListener('click', generateWhatsAppOrder);
+  }
+
+  // Navigation Tabs
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -403,10 +578,11 @@ function init() {
       const targetId = btn.getAttribute('data-tab');
       const targetPane = document.getElementById(targetId);
       if (targetPane) targetPane.classList.add('active');
+      playSound('click');
     });
   });
 
-  // Bind Blueprint Sub-views
+  // Blueprint Sub-Views
   document.querySelectorAll('.plan-sub-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.plan-sub-btn').forEach(b => b.classList.remove('active'));
@@ -418,10 +594,11 @@ function init() {
       if (view === 'entrance3d') document.getElementById('subViewEntrance3d')?.classList.add('active');
       if (view === 'roofs') document.getElementById('subViewRoofs')?.classList.add('active');
       if (view === 'fulldossier') document.getElementById('subViewFullDossier')?.classList.add('active');
+      playSound('click');
     });
   });
 
-  // Bind Optimizer Levers
+  // Cost Minimizer Levers
   document.querySelectorAll('.cost-lever').forEach(checkbox => {
     const id = checkbox.id;
     if (state.activeLevers[id] !== undefined) {
@@ -429,8 +606,9 @@ function init() {
     }
     checkbox.addEventListener('change', (e) => {
       state.activeLevers[id] = e.target.checked;
-      renderAll();
+      renderCalculations();
       saveState();
+      playSound('chime');
     });
   });
 
@@ -438,7 +616,6 @@ function init() {
   const exportBtn = document.getElementById('exportShoppingListBtn');
   if (exportBtn) {
     exportBtn.addEventListener('click', () => {
-      // Switch to contract/shopping tab and trigger window print
       const contractTabBtn = document.querySelector('[data-tab="contractTab"]');
       if (contractTabBtn) contractTabBtn.click();
       setTimeout(() => window.print(), 300);
@@ -449,10 +626,11 @@ function init() {
   const resetBtn = document.getElementById('resetDefaultsBtn');
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
-      if (confirm('Reset all values back to initial project inventory?')) {
-        localStorage.removeItem('jengasmart_5x8m_state');
+      if (confirm("Reset Devin's data back to starting site inventory?")) {
+        localStorage.removeItem('jengasmart_devin_state');
         state.materials = JSON.parse(JSON.stringify(DEFAULT_MATERIALS));
-        state.completedPhases = [];
+        state.completedPhases = [1];
+        state.curingDays = [1, 2];
         state.activeLevers = {
           leverSkillionRoof: false,
           leverQuarryDirect: true,
@@ -462,14 +640,16 @@ function init() {
           leverTimberSpacing: true
         };
         renderAll();
+        playSound('click');
       }
     });
   }
 
   renderAll();
+  renderCuringTracker();
 }
 
-// 7. REGIONAL RATE APPLICATION
+// 12. REGIONAL RATE APPLICATION
 function updateRatesForRegion() {
   const currentRates = REGIONAL_RATES[state.region];
   state.materials.forEach(mat => {
@@ -479,7 +659,7 @@ function updateRatesForRegion() {
   });
 }
 
-// 8. RENDER ALL
+// 13. RENDER ALL
 function renderAll() {
   renderInventoryTable();
   renderCalculations();
@@ -487,7 +667,7 @@ function renderAll() {
   renderShoppingList();
 }
 
-// 9. INVENTORY TABLE
+// 14. INVENTORY TABLE
 function renderInventoryTable() {
   if (!inventoryBody) return;
   inventoryBody.innerHTML = '';
@@ -522,7 +702,6 @@ function renderInventoryTable() {
     inventoryBody.appendChild(tr);
   });
 
-  // Attach input listeners
   inventoryBody.querySelectorAll('.stock-input').forEach(input => {
     input.addEventListener('input', (e) => {
       const idx = parseInt(e.target.getAttribute('data-index'), 10);
@@ -544,7 +723,7 @@ function renderInventoryTable() {
   });
 }
 
-// 10. REAL-TIME CALCULATIONS & METERS
+// 15. CALCULATIONS
 function renderCalculations() {
   let grossMaterialsCost = 0;
   let ownedStockValue = 0;
@@ -563,7 +742,6 @@ function renderCalculations() {
     if (deficit > 0) deficitItemsCount++;
   });
 
-  // Calculate active savings from levers
   let totalLeverSavings = 0;
   document.querySelectorAll('.cost-lever').forEach(checkbox => {
     if (checkbox.checked) {
@@ -572,14 +750,10 @@ function renderCalculations() {
     }
   });
 
-  // Estimated Labor baseline for 5x8m (approx KES 150,000 baseline)
   const baselineLabor = 150000;
   const grossProjectTotal = grossMaterialsCost + baselineLabor;
-  
-  // Net cash needed = (materials to buy + baseline labor) - active tactical savings
   const netCashNeeded = Math.max(0, (netMaterialsSpend + baselineLabor) - totalLeverSavings);
 
-  // Update Header Meters
   if (grossTotalDisplay) grossTotalDisplay.textContent = `KES ${grossProjectTotal.toLocaleString()}`;
   if (savedTotalDisplay) savedTotalDisplay.textContent = `KES ${ownedStockValue.toLocaleString()}`;
   if (netCashDisplay) netCashDisplay.textContent = `KES ${Math.round(netCashNeeded).toLocaleString()}`;
@@ -588,14 +762,13 @@ function renderCalculations() {
   const stockPercent = Math.min(100, Math.round((ownedStockValue / grossMaterialsCost) * 100)) || 0;
   if (stockCoverPercent) stockCoverPercent.textContent = `${stockPercent}% materials value covered`;
 
-  // Update Table Footers
   if (tableSpendTotal) tableSpendTotal.textContent = `KES ${netMaterialsSpend.toLocaleString()}`;
   if (tableStockTotal) tableStockTotal.textContent = `KES ${ownedStockValue.toLocaleString()}`;
   if (totalDeficitQtyCount) totalDeficitQtyCount.textContent = `${deficitItemsCount} items need purchase`;
   if (meterActiveSavings) meterActiveSavings.textContent = `KES ${totalLeverSavings.toLocaleString()}`;
 }
 
-// 11. PHASES TIMELINE
+// 16. PHASES TIMELINE
 function renderPhases() {
   if (!phasesTimeline) return;
   phasesTimeline.innerHTML = '';
@@ -633,14 +806,18 @@ function renderPhases() {
     phasesTimeline.appendChild(card);
   });
 
-  // Attach phase checkbox toggles
   phasesTimeline.querySelectorAll('.phase-chk').forEach(chk => {
     chk.addEventListener('change', (e) => {
       const pId = parseInt(e.target.getAttribute('data-phase-id'), 10);
       if (e.target.checked) {
-        if (!state.completedPhases.includes(pId)) state.completedPhases.push(pId);
+        if (!state.completedPhases.includes(pId)) {
+          state.completedPhases.push(pId);
+          playSound('fanfare');
+          triggerConfetti();
+        }
       } else {
         state.completedPhases = state.completedPhases.filter(id => id !== pId);
+        playSound('click');
       }
       renderPhases();
       saveState();
@@ -648,7 +825,7 @@ function renderPhases() {
   });
 }
 
-// 12. HARDWARE SHOPPING LIST (ONLY DEFICITS)
+// 17. SHOPPING LIST
 function renderShoppingList() {
   if (!shoppingListPrintable) return;
   shoppingListPrintable.innerHTML = '';
@@ -703,7 +880,57 @@ function renderShoppingList() {
   shoppingListPrintable.appendChild(totalRow);
 }
 
-// 13. INTERACTIVE ROOM SELECTOR (BLUEPRINT)
+// 18. WHATSAPP ORDER GENERATOR
+function generateWhatsAppOrder() {
+  playSound('click');
+  const deficitItems = state.materials.filter(m => (m.required - m.inStock) > 0);
+  let totalCost = 0;
+
+  let text = `*DEVIN'S 5×8m HOUSE — HARDWARE PURCHASE ORDER* 🇰🇪\n`;
+  text += `Location: Kenya\n`;
+  text += `------------------------------------\n`;
+
+  deficitItems.forEach(item => {
+    const qty = item.required - item.inStock;
+    const subtotal = qty * item.defaultRate;
+    totalCost += subtotal;
+    text += `• ${item.name}: *${qty.toLocaleString()} ${item.unit}* (~KES ${subtotal.toLocaleString()})\n`;
+  });
+
+  text += `------------------------------------\n`;
+  text += `*ESTIMATED BUDGET: KES ${totalCost.toLocaleString()}*\n\n`;
+  text += `Habari, please review this order and provide your best cash-on-delivery quotation. Thank you! — Devin`;
+
+  const encoded = encodeURIComponent(text);
+  const whatsappUrl = `https://api.whatsapp.com/send?text=${encoded}`;
+
+  // Copy to clipboard
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("📋 Devin's Hardware Order copied to clipboard! Opening WhatsApp...");
+      window.open(whatsappUrl, '_blank');
+    }).catch(() => {
+      window.open(whatsappUrl, '_blank');
+    });
+  } else {
+    window.open(whatsappUrl, '_blank');
+  }
+}
+
+// 19. BLUEPRINT LIGHTING SIMULATOR
+window.toggleBlueprintLighting = function() {
+  state.nightMode = !state.nightMode;
+  const svg = document.getElementById('blueprintSvg');
+  const icon = document.getElementById('lightToggleIcon');
+  const text = document.getElementById('lightToggleText');
+
+  if (svg) svg.classList.toggle('night-mode', state.nightMode);
+  if (icon) icon.textContent = state.nightMode ? '☀️' : '🌙';
+  if (text) text.textContent = state.nightMode ? 'Day Mode' : 'Night Mode';
+  playSound('click');
+};
+
+// 20. ROOM SELECTOR
 window.selectRoom = function(roomKey) {
   const room = ROOM_DATA[roomKey];
   if (!room) return;
@@ -720,7 +947,127 @@ window.selectRoom = function(roomKey) {
       </div>
     `).join('');
   }
+  playSound('click');
 };
 
-// Start application
+// 21. DEBE BATCHING STATION
+window.setBatchMix = function(mixType) {
+  playSound('click');
+  document.querySelectorAll('.batch-btn').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.querySelector(`.batch-btn[data-mix="${mixType}"]`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  const data = BATCH_RATIOS[mixType] || BATCH_RATIOS.concrete;
+  const cEl = document.getElementById('batchCementQty');
+  const sEl = document.getElementById('batchSandQty');
+  const bEl = document.getElementById('batchBallastQty');
+  const nEl = document.getElementById('batchNote');
+
+  if (cEl) cEl.textContent = data.cement;
+  if (sEl) sEl.textContent = data.sand;
+  if (bEl) bEl.textContent = data.ballast;
+  if (nEl) nEl.innerHTML = data.note;
+};
+
+// 22. 7-DAY CURING TRACKER
+function renderCuringTracker() {
+  if (!curingDaysGrid) return;
+  curingDaysGrid.innerHTML = '';
+
+  for (let day = 1; day <= 7; day++) {
+    const isDone = state.curingDays.includes(day);
+    const box = document.createElement('div');
+    box.className = `curing-day-box ${isDone ? 'done' : ''}`;
+    box.innerHTML = `
+      <div class="day-num">Day ${day}</div>
+      <span style="font-size: 1.2rem;">${isDone ? '💧' : '⏳'}</span>
+      <div class="day-status">${isDone ? 'Watered ✓' : 'Pending'}</div>
+    `;
+    box.addEventListener('click', () => {
+      if (state.curingDays.includes(day)) {
+        state.curingDays = state.curingDays.filter(d => d !== day);
+      } else {
+        state.curingDays.push(day);
+        playSound('chime');
+      }
+      renderCuringTracker();
+      saveState();
+    });
+    curingDaysGrid.appendChild(box);
+  }
+}
+
+// 23. JENGA AI SITE ADVISOR CHAT
+window.sendChatMessage = function() {
+  const input = document.getElementById('chatInput');
+  const box = document.getElementById('chatMessages');
+  if (!input || !box) return;
+
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  // Append user message
+  const userDiv = document.createElement('div');
+  userDiv.className = 'chat-bubble user';
+  userDiv.textContent = msg;
+  box.appendChild(userDiv);
+  input.value = '';
+  playSound('click');
+
+  // Generate bot reply
+  setTimeout(() => {
+    let reply = "Pole Devin, I didn't recognize that specific question. Try asking about 'sand silt test', 'concrete curing', '2,000 bricks', or 'fundi theft control'!";
+    const lower = msg.toLowerCase();
+
+    if (lower.includes('silt') || lower.includes('sand') || lower.includes('soil')) {
+      reply = COPILOT_ANSWERS.silt;
+    } else if (lower.includes('cure') || lower.includes('curing') || lower.includes('water') || lower.includes('wet')) {
+      reply = COPILOT_ANSWERS.curing;
+    } else if (lower.includes('theft') || lower.includes('steal') || lower.includes('leak') || lower.includes('empty bag')) {
+      reply = COPILOT_ANSWERS.theft;
+    } else if (lower.includes('brick') || lower.includes('2000') || lower.includes('wall')) {
+      reply = COPILOT_ANSWERS.bricks;
+    } else if (lower.includes('mabati') || lower.includes('roof') || lower.includes('sheet')) {
+      reply = "🏠 **Devin's Roof Advice:** You have 15 iron sheets. If you choose the **Skillion (Mono-pitch) roof**, you only need 20 sheets total (buy 5 more!). If you choose the traditional Gable roof, you need 24 sheets (buy 9 more). The skillion saves KES ~28,500!";
+    } else if (lower.includes('rebar') || lower.includes('ring beam') || lower.includes('d8')) {
+      reply = "🏗️ **Ring Beam Status:** Devin, your D8 & R6 rebar + 3kg binding wire 100% covers the ring beam! Ensure fundis use 4 longitudinal D8 bars with R6 stirrups spaced at 200mm center-to-center.";
+    }
+
+    const botDiv = document.createElement('div');
+    botDiv.className = 'chat-bubble bot';
+    botDiv.innerHTML = reply.replace(/\n/g, '<br>');
+    box.appendChild(botDiv);
+    box.scrollTop = box.scrollHeight;
+    playSound('chime');
+  }, 400);
+};
+
+window.askPreset = function(type) {
+  const box = document.getElementById('chatMessages');
+  if (!box) return;
+
+  const questions = {
+    silt: "How do I test my river sand for silt on site?",
+    curing: "What is the 7-day concrete curing rule?",
+    theft: "How do I prevent cement and rebar theft by fundis?",
+    bricks: "How will my 2,000 bricks be used in the build?"
+  };
+
+  const userDiv = document.createElement('div');
+  userDiv.className = 'chat-bubble user';
+  userDiv.textContent = questions[type] || type;
+  box.appendChild(userDiv);
+  playSound('click');
+
+  setTimeout(() => {
+    const botDiv = document.createElement('div');
+    botDiv.className = 'chat-bubble bot';
+    botDiv.innerHTML = (COPILOT_ANSWERS[type] || "Checking answer...").replace(/\n/g, '<br>');
+    box.appendChild(botDiv);
+    box.scrollTop = box.scrollHeight;
+    playSound('chime');
+  }, 350);
+};
+
+// Start app
 document.addEventListener('DOMContentLoaded', init);
