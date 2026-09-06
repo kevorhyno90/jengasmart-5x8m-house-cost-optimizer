@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JengaSmart Kenya — 5×8m House Cost Optimizer & Build Manager</title>
+  <meta name="description" content="Interactive construction cost minimizer, inventory deficit calculator, and smart building roadmap for a 5m x 8m (40 sqm) 2-bedroom home in Kenya.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Top Navigation Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+            <path d="M9 21V12h6v9"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">JengaSmart <span class="badge-country">KE 🇰🇪</span></h1>
+          <p class="brand-sub">5×8m (40m²) House Cost Minimizer & Build Manager</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="region-selector-wrap">
+          <label for="regionSelect">Market Rates:</label>
+          <select id="regionSelect" class="select-pill">
+            <option value="nairobi">Nairobi / Kiambu / Machakos</option>
+            <option value="western">Western / Kisumu / Kakamega</option>
+            <option value="rift">Rift Valley / Nakuru / Eldoret</option>
+            <option value="coast">Coast / Mombasa / Kilifi</option>
+          </select>
+        </div>
+        <button id="exportShoppingListBtn" class="btn btn-outline" title="Print or save hardware purchase order">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+          Hardware Order Sheet
+        </button>
+        <button id="resetDefaultsBtn" class="btn btn-ghost" title="Reset to initial values">
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Budget Quick Bar -->
+    <div class="quick-stats-bar">
+      <div class="stat-card">
+        <span class="stat-label">Full Project Value (Gross)</span>
+        <div class="stat-val" id="grossTotalDisplay">KES 0</div>
+        <span class="stat-hint">Standard Market Baseline</span>
+      </div>
+      <div class="stat-card highlight-green">
+        <span class="stat-label">Your Inventory Saved</span>
+        <div class="stat-val text-green" id="savedTotalDisplay">KES 0</div>
+        <span class="stat-hint" id="stockCoverPercent">0% materials on hand</span>
+      </div>
+      <div class="stat-card highlight-primary">
+        <span class="stat-label">Net Cash Needed to Complete</span>
+        <div class="stat-val text-primary" id="netCashDisplay">KES 0</div>
+        <span class="stat-hint" id="netAfterSavings">After smart optimizations</span>
+      </div>
+      <div class="stat-card highlight-amber">
+        <span class="stat-label">Smart Cuttable Costs</span>
+        <div class="stat-val text-amber" id="optSavingsDisplay">KES 0</div>
+        <span class="stat-hint">Via Active Optimization Levers</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tabs-nav" aria-label="Project Sections">
+    <div class="tabs-container">
+      <button class="tab-btn active" data-tab="inventoryTab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        1. Inventory & Deficit
+      </button>
+      <button class="tab-btn" data-tab="optimizerTab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8l-8 8M8 8h8v8"/></svg>
+        2. Cost Minimizer Levers
+      </button>
+      <button class="tab-btn" data-tab="phasesTab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        3. Phase Cashflow Tracker
+      </button>
+      <button class="tab-btn" data-tab="blueprintTab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        4. Plans & 3D Visualizer
+      </button>
+      <button class="tab-btn" data-tab="contractTab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+        5. Fundi Contract & Shopping List
+      </button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <!-- TAB 1: INVENTORY & DEFICIT CALCULATOR -->
+    <section id="inventoryTab" class="tab-pane active">
+      <div class="pane-header">
+        <div>
+          <h2>Kenya Materials Inventory & Deficit Analyzer</h2>
+          <p class="section-desc">Adjust what you currently own vs required amounts for your 5m × 8m footprint. Real-time deficit and purchase budgeting update instantly.</p>
+        </div>
+        <div class="pill-badge pill-alert">
+          <span class="dot"></span>
+          User Stock Loaded: 2,000 Bricks, 15 Mabati, 20 Cement, 10t Sand, 3t Ballast
+        </div>
+      </div>
+
+      <div class="inventory-grid-wrapper">
+        <table class="inventory-table" id="inventoryTable">
+          <thead>
+            <tr>
+              <th>Material Item (5×8m Spec)</th>
+              <th>Required</th>
+              <th>You Have (In Stock)</th>
+              <th>Deficit (To Buy)</th>
+              <th>Unit Rate (KES)</th>
+              <th>Subtotal To Spend</th>
+              <th>Stock Value</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryBody">
+            <!-- Populated dynamically via app.js -->
+          </tbody>
+          <tfoot>
+            <tr class="table-total-row">
+              <td colspan="3"><strong>TOTAL CONSTRUCTION MATERIALS BUDGET</strong></td>
+              <td id="totalDeficitQtyCount">--</td>
+              <td>--</td>
+              <td id="tableSpendTotal" class="text-primary font-bold">KES 0</td>
+              <td id="tableStockTotal" class="text-green font-bold">KES 0</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Quick Analysis Callout Cards -->
+      <div class="insights-grid">
+        <div class="insight-card warning">
+          <div class="insight-icon">🧱</div>
+          <div class="insight-content">
+            <h4>Brick Deficit Alert (~5,000 pcs)</h4>
+            <p>Your 2,000 bricks will complete the substructure footing wall up to the DPC slab level. You need ~5,000 more bricks to complete superstructure walling up to the 2.8m ring beam level.</p>
+          </div>
+        </div>
+
+        <div class="insight-card info">
+          <div class="insight-icon">🏗️</div>
+          <div class="insight-content">
+            <h4>Ring Beam Rebar is 100% Ready</h4>
+            <p>Your D8 and R6 rebar + 3kg binding wire will easily tie all 26 linear meters of the reinforced concrete ring beam (4×D8 bars with R6 stirrups @ 200mm c/c). <strong>Zero new rebar expenditure required!</strong></p>
+          </div>
+        </div>
+
+        <div class="insight-card success">
+          <div class="insight-icon">🛡️</div>
+          <div class="insight-content">
+            <h4>Slab Waterproofing DPM Covered</h4>
+            <p>Your 8 rolls of 1000-gauge waterproof polythene cover 50+ m² with 200mm overlaps. Your ground moisture barrier is 100% settled.</p>
+          </div>
+        </div>
+
+        <div class="insight-card alert">
+          <div class="insight-icon">🏠</div>
+          <div class="insight-content">
+            <h4>Roof Sheets (Mabati) Gap: 9 Sheets</h4>
+            <p>The 8.9m × 6.0m gable roof needs 24 sheets (12 per side). With 15 sheets in hand, purchasing only <strong>9 more gauge-28 sheets</strong> completes the roof structure.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: COST MINIMIZER STRATEGIES LEVER -->
+    <section id="optimizerTab" class="tab-pane">
+      <div class="pane-header">
+        <div>
+          <h2>Smart Cost-Minimizing Levers (Kenya Practical Tips)</h2>
+          <p class="section-desc">Toggle practical on-the-ground cost reduction tactics verified across Kenyan sites. Watch your cash requirement shrink instantly.</p>
+        </div>
+        <div class="savings-meter-card">
+          <span class="meter-title">Total Active Savings:</span>
+          <span class="meter-amount" id="meterActiveSavings">KES 0</span>
+        </div>
+      </div>
+
+      <div class="levers-grid">
+        <!-- Lever 1: Roof Style -->
+        <div class="lever-card">
+          <div class="lever-top">
+            <div class="lever-info">
+              <span class="lever-category">Structural & Roof</span>
+              <h3>Mono-Pitch (Skillion) vs Traditional Gable Roof</h3>
+              <p>Mono-pitch slopes in one direction (e.g. front to back). Eliminates ridge caps, valley gutters, and saves 30% on timber trusses and 4 iron sheets.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="leverSkillionRoof" class="cost-lever" data-savings="28500">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="lever-footer">
+            <span class="lever-savings">Saves approx: <strong>KES 28,500</strong></span>
+            <span class="lever-tag">High Impact</span>
+          </div>
+        </div>
+
+        <!-- Lever 2: Direct Quarry Truck Delivery -->
+        <div class="lever-card">
+          <div class="lever-top">
+            <div class="lever-info">
+              <span class="lever-category">Procurement Logistics</span>
+              <h3>Buy Sand & Ballast Direct from Source in 14-Tonne Tipper</h3>
+              <p>Ordering a single large 14-tonne tipper directly from the river/quarry instead of multiple 7-tonne or pickup trips from roadside middlemen saves substantial broker markups.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="leverQuarryDirect" class="cost-lever" data-savings="14000" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="lever-footer">
+            <span class="lever-savings">Saves approx: <strong>KES 14,000</strong></span>
+            <span class="lever-tag">Easy Win</span>
+          </div>
+        </div>
+
+        <!-- Lever 3: Fundi Milestone Contract -->
+        <div class="lever-card">
+          <div class="lever-top">
+            <div class="lever-info">
+              <span class="lever-category">Labor Management</span>
+              <h3>Milestone-Based Labor ("Kandarasi") vs Daily Wages</h3>
+              <p>Daily wages (Fundi @ KES 1,500/day + Helper @ KES 800/day) leads to slow work and budget drag. Fixed milestone tasks with 10% retention guarantee fast delivery and zero day-stretching.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="leverKandarasiLabor" class="cost-lever" data-savings="25000" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="lever-footer">
+            <span class="lever-savings">Saves approx: <strong>KES 25,000</strong></span>
+            <span class="lever-tag">Critical Protection</span>
+          </div>
+        </div>
+
+        <!-- Lever 4: Cement Grade Optimization -->
+        <div class="lever-card">
+          <div class="lever-top">
+            <div class="lever-info">
+              <span class="lever-category">Materials Selection</span>
+              <h3>Dual Cement Grade (32.5N for Plaster vs 42.5N for Concrete)</h3>
+              <p>Don't use expensive 42.5N structural cement for wall mortar and wall plaster. Use standard 32.5N (KES ~750/bag vs KES 850/bag) for the 50 bags of mortar/plaster.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="leverCementGrade" class="cost-lever" data-savings="6500" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="lever-footer">
+            <span class="lever-savings">Saves approx: <strong>KES 6,500</strong></span>
+            <span class="lever-tag">Smart Practice</span>
+          </div>
+        </div>
+
+        <!-- Lever 5: Phased Finishing Strategy -->
+        <div class="lever-card">
+          <div class="lever-top">
+            <div class="lever-info">
+              <span class="lever-category">Move-In Acceleration</span>
+              <h3>Phase 1 Move-In: Red Oxide Cement Screed (Defer Floor Tiles)</h3>
+              <p>Polished red/black oxide cement floor screed costs KES 12,000 vs Ceramic tiles with adhesive & grouting (KES 55,000+). Allows safe, dust-free move-in; tiles can be laid later directly on top.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="leverScreedOverTiles" class="cost-lever" data-savings="43000">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="lever-footer">
+            <span class="lever-savings">Saves approx: <strong>KES 43,000</strong></span>
+            <span class="lever-tag">Huge Cashflow Relief</span>
+          </div>
+        </div>
+
+        <!-- Lever 6: Timber Truss Spacing & Treated Pine -->
+        <div class="lever-card">
+          <div class="lever-top">
+            <div class="lever-info">
+              <span class="lever-category">Roof Framing</span>
+              <h3>Engineered Truss Spacing (1.2m c/c with 2×2 Purlins)</h3>
+              <p>For light gauge-28 mabati, 1.2m center-to-center truss spacing is structurally sound and reduces 3 full truss assemblies compared to overly conservative 0.9m spacing.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="leverTimberSpacing" class="cost-lever" data-savings="16000" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="lever-footer">
+            <span class="lever-savings">Saves approx: <strong>KES 16,000</strong></span>
+            <span class="lever-tag">Structural Saving</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: PHASE-BY-PHASE CASHFLOW TRACKER -->
+    <section id="phasesTab" class="tab-pane">
+      <div class="pane-header">
+        <div>
+          <h2>7-Stage Phased Construction Roadmap</h2>
+          <p class="section-desc">Track progress, mark completed milestones, and see exactly how much cash is needed to unlock the next construction milestone.</p>
+        </div>
+        <div class="overall-progress-box">
+          <div class="progress-labels">
+            <span>Overall Build Progress:</span>
+            <strong id="buildProgressPercent">0%</strong>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="buildProgressBar" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phases-timeline" id="phasesTimeline">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- TAB 4: BLUEPRINT & 3D VISUALIZER -->
+    <section id="blueprintTab" class="tab-pane">
+      <div class="pane-header">
+        <div>
+          <h2>5×8m Architectural Plans & Visuals</h2>
+          <p class="section-desc">Floor plan layout, room dimensions, entrance perspective, and roof comparisons.</p>
+        </div>
+        <div class="sub-nav-pills">
+          <button class="plan-sub-btn active" data-view="floorplan">2D Floor Blueprint</button>
+          <button class="plan-sub-btn" data-view="topdown3d">Top-Down 3D View</button>
+          <button class="plan-sub-btn" data-view="entrance3d">Main Entrance View</button>
+          <button class="plan-sub-btn" data-view="roofs">Roof Options (Gable vs Skillion)</button>
+        </div>
+      </div>
+
+      <div class="view-stage">
+        <!-- Sub-view 1: 2D Interactive SVG Blueprint -->
+        <div id="subViewFloorplan" class="plan-sub-panel active">
+          <div class="interactive-blueprint-container">
+            <div class="blueprint-card">
+              <div class="blueprint-header-tag">Interactive Dimensioned Floor Plan (Click rooms for details)</div>
+              <svg class="blueprint-svg" viewBox="0 0 850 560" xmlns="http://www.w3.org/2000/svg">
+                <!-- Grid background -->
+                <defs>
+                  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                  </pattern>
+                </defs>
+                <rect width="850" height="560" fill="url(#grid)"/>
+
+                <!-- Exterior Wall 8m x 5m (Scale: 1m = 90px) -->
+                <!-- x: 60 to 780 = 720px (8m). y: 50 to 500 = 450px (5m) -->
+                <rect x="60" y="50" width="720" height="450" fill="#0f172a" stroke="#38bdf8" stroke-width="8" rx="4"/>
+
+                <!-- Master Bedroom: (Left Top: 2.9m x 2.8m -> 261px x 252px) -->
+                <g class="room-group" onclick="selectRoom('master')">
+                  <rect x="68" y="58" width="260" height="250" fill="rgba(56, 189, 248, 0.08)" stroke="#38bdf8" stroke-dasharray="4" stroke-width="2"/>
+                  <text x="198" y="160" fill="#f8fafc" font-size="16" font-weight="bold" text-anchor="middle">Master Bedroom</text>
+                  <text x="198" y="185" fill="#94a3b8" font-size="13" text-anchor="middle">2.90m × 2.80m (8.12 m²)</text>
+                  <text x="198" y="205" fill="#38bdf8" font-size="11" text-anchor="middle">Queen Bed • 2.2m Built-in Wardrobe</text>
+                </g>
+
+                <!-- Kids Bedroom: (Left Bottom: 2.9m x 2.0m -> 261px x 180px) -->
+                <g class="room-group" onclick="selectRoom('kids')">
+                  <rect x="68" y="318" width="260" height="174" fill="rgba(168, 85, 247, 0.08)" stroke="#a855f7" stroke-dasharray="4" stroke-width="2"/>
+                  <text x="198" y="390" fill="#f8fafc" font-size="16" font-weight="bold" text-anchor="middle">Kids' Bedroom</text>
+                  <text x="198" y="415" fill="#94a3b8" font-size="13" text-anchor="middle">2.90m × 2.00m (5.80 m²)</text>
+                  <text x="198" y="435" fill="#a855f7" font-size="11" text-anchor="middle">Bunk Beds • 1.6m Wardrobe</text>
+                </g>
+
+                <!-- Dividing Interior Walls -->
+                <line x1="328" y1="58" x2="328" y2="492" stroke="#64748b" stroke-width="6"/>
+                <line x1="68" y1="313" x2="328" y2="313" stroke="#64748b" stroke-width="6"/>
+
+                <!-- Central Open Living Lounge & Dining: (Right side: 4.8m x 5.0m) -->
+                <g class="room-group" onclick="selectRoom('living')">
+                  <rect x="334" y="58" width="440" height="434" fill="rgba(16, 185, 129, 0.06)" stroke="#10b981" stroke-dasharray="4" stroke-width="2"/>
+                  <text x="554" y="210" fill="#f8fafc" font-size="18" font-weight="bold" text-anchor="middle">Open Living Lounge</text>
+                  <text x="554" y="235" fill="#94a3b8" font-size="14" text-anchor="middle">4.80m × 2.80m Living Area</text>
+                  <text x="554" y="260" fill="#10b981" font-size="12" text-anchor="middle">Dual-Zone Sofas • 1.8m Wide Central Walkway</text>
+                </g>
+
+                <!-- Corner Kitchen Cabinets & Breakfast Bar (Top Right) -->
+                <g class="room-group" onclick="selectRoom('kitchen')">
+                  <rect x="630" y="58" width="144" height="150" fill="rgba(245, 158, 11, 0.12)" stroke="#f59e0b" stroke-width="2"/>
+                  <text x="702" y="115" fill="#fbbf24" font-size="14" font-weight="bold" text-anchor="middle">Corner Pantry</text>
+                  <text x="702" y="135" fill="#cbd5e1" font-size="11" text-anchor="middle">Storage Cabinets</text>
+                  <text x="702" y="150" fill="#cbd5e1" font-size="11" text-anchor="middle">+ 1.6m Breakfast Bar</text>
+                </g>
+
+                <!-- Main Entrance Door Indicator (Bottom Center-Right) -->
+                <g>
+                  <rect x="510" y="492" width="90" height="14" fill="#10b981" rx="2"/>
+                  <path d="M 510 492 A 90 90 0 0 1 600 402" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="3"/>
+                  <text x="555" y="525" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">MAIN ENTRANCE (900mm)</text>
+                </g>
+
+                <!-- Dimension Marks -->
+                <!-- Top 8.00m -->
+                <line x1="60" y1="30" x2="780" y2="30" stroke="#94a3b8" stroke-width="1.5"/>
+                <circle cx="60" cy="30" r="3" fill="#94a3b8"/>
+                <circle cx="780" cy="30" r="3" fill="#94a3b8"/>
+                <text x="420" y="24" fill="#f8fafc" font-size="14" font-weight="bold" text-anchor="middle">TOTAL LENGTH = 8.00 METERS</text>
+
+                <!-- Left 5.00m -->
+                <line x1="35" y1="50" x2="35" y2="500" stroke="#94a3b8" stroke-width="1.5"/>
+                <circle cx="35" cy="50" r="3" fill="#94a3b8"/>
+                <circle cx="35" cy="500" r="3" fill="#94a3b8"/>
+                <text x="25" y="275" fill="#f8fafc" font-size="14" font-weight="bold" text-anchor="middle" transform="rotate(-90 25 275)">WIDTH = 5.00 M</text>
+              </svg>
+            </div>
+
+            <!-- Room Detail Card -->
+            <div class="room-details-card" id="roomDetailCard">
+              <h3 id="roomDetailTitle">Master Bedroom</h3>
+              <div class="room-specs" id="roomDetailSpecs">
+                <div class="spec-row"><span>Dimensions:</span><strong>2.90m × 2.80m (8.12 m²)</strong></div>
+                <div class="spec-row"><span>Bed Capacity:</span><strong>Queen 5ft × 6ft Bed with 2 side tables</strong></div>
+                <div class="spec-row"><span>Wardrobe:</span><strong>2.20m full-height 3-door wardrobe</strong></div>
+                <div class="spec-row"><span>Natural Lighting:</span><strong>1200×1200mm steel casement window</strong></div>
+                <div class="spec-row"><span>Electrical:</span><strong>1 central ceiling bulb + 2 double sockets</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-view 2: Top-down 3D Plan -->
+        <div id="subViewTopdown3d" class="plan-sub-panel">
+          <div class="image-showcase">
+            <img src="assets/top_down_plan.jpg" alt="Top Down 3D Floor Plan with 2 bedrooms, kitchen cabinets and seating" class="showcase-img">
+            <div class="image-caption">
+              <strong>High-Res 3D Top-Down Architectural Visualization:</strong>
+              Dual sofa seating arrangement with open 1.8m corridor, corner storage pantry, and 2 private bedrooms.
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-view 3: Main Entrance 3D View -->
+        <div id="subViewEntrance3d" class="plan-sub-panel">
+          <div class="image-showcase">
+            <img src="assets/main_entrance.jpg" alt="Perspective view looking into the main entrance" class="showcase-img">
+            <div class="image-caption">
+              <strong>Main Entrance View:</strong>
+              Perspective from the front doorway showing unobstructed movement flow, lounge seating, and bedroom doors.
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-view 4: Roof Options Comparison -->
+        <div id="subViewRoofs" class="plan-sub-panel">
+          <div class="roofs-comparison-grid">
+            <div class="roof-card">
+              <div class="roof-img-wrap">
+                <img src="assets/roof_gable.jpg" alt="Option 1: Traditional Gable Roof" class="roof-thumb">
+              </div>
+              <div class="roof-details">
+                <div class="roof-badge badge-traditional">Option 1: Traditional Gable Roof</div>
+                <h4>High-Pitch Pitched Roof (4.25m Apex)</h4>
+                <ul>
+                  <li><strong>Iron Sheets:</strong> 24 sheets (12 per pitch)</li>
+                  <li><strong>Ridge Caps:</strong> 5 linear pieces needed</li>
+                  <li><strong>Timber Cost:</strong> ~KES 68,000 (Trusses, struts, purlins)</li>
+                  <li><strong>Aesthetics:</strong> Classic residential Kenyan look</li>
+                  <li><strong>Total Roof Cost:</strong> ~KES 118,000</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="roof-card highlight-budget">
+              <div class="roof-img-wrap">
+                <img src="assets/roof_skillion.jpg" alt="Option 2: Modern Skillion Mono-Pitch Roof" class="roof-thumb">
+              </div>
+              <div class="roof-details">
+                <div class="roof-badge badge-budget">Option 2: Modern Skillion (RECOMMENDED FOR MINIMUM COST)</div>
+                <h4>Mono-Pitch Slope (3.60m Front to 2.85m Rear)</h4>
+                <ul>
+                  <li><strong>Iron Sheets:</strong> 20 sheets only (Saves 4 sheets!)</li>
+                  <li><strong>Ridge Caps:</strong> None required (Zero cost!)</li>
+                  <li><strong>Timber Cost:</strong> ~KES 46,000 (Single-span rafters)</li>
+                  <li><strong>Aesthetics:</strong> Ultra-modern urban/contemporary clean lines</li>
+                  <li><strong>Total Roof Cost:</strong> ~KES 89,500 (Saves KES ~28,500!)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: FUNDI CONTRACT & SHOPPING LIST -->
+    <section id="contractTab" class="tab-pane">
+      <div class="pane-header">
+        <div>
+          <h2>Site Protection & Procurement Toolkit</h2>
+          <p class="section-desc">Generate legally tight artisan (fundi) milestone agreements and clean hardware shopping requisition sheets.</p>
+        </div>
+        <div class="contract-actions">
+          <button class="btn btn-primary" onclick="window.print()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+            Print Documents
+          </button>
+        </div>
+      </div>
+
+      <div class="toolkit-grid">
+        <!-- Hardware Shopping Requisition -->
+        <div class="toolkit-card printable-card">
+          <div class="card-header">
+            <h3>📋 Official Hardware Deficit Purchase List</h3>
+            <span class="card-subtitle">Print this to take directly to the hardware shop for quotes</span>
+          </div>
+          <div class="shopping-list-content" id="shoppingListPrintable">
+            <!-- Dynamically injected -->
+          </div>
+        </div>
+
+        <!-- Fundi Milestone Agreement Template -->
+        <div class="toolkit-card printable-card">
+          <div class="card-header">
+            <h3>📜 Kenya Standard "Kandarasi" Artisan Contract</h3>
+            <span class="card-subtitle">Enforce fixed milestone payments and prevent artisan abandonment</span>
+          </div>
+          <div class="contract-template-body">
+            <div class="contract-clause">
+              <strong>PROJECT:</strong> Construction of 5.00m × 8.00m 2-Bedroom Residential House.<br>
+              <strong>EMPLOYER (Client):</strong> _____________________________________ (Tel: ________________)<br>
+              <strong>LEAD ARTISAN (Fundi):</strong> _____________________________________ (ID / Tel: ________________)
+            </div>
+
+            <div class="contract-clause">
+              <h4>1. SCOPE OF WORK & MILESTONE STIPULATIONS</h4>
+              <p>The Fundi undertakes to complete each stage to civil building standards before requesting the agreed milestone installment. Daily attendance of at least 1 lead mason and 2 helpers is mandatory.</p>
+              
+              <div class="milestone-table-wrapper">
+                <table class="milestone-contract-table">
+                  <thead>
+                    <tr>
+                      <th>Stage #</th>
+                      <th>Deliverable Milestone</th>
+                      <th>Target Days</th>
+                      <th>Payable %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>M1</td>
+                      <td>Excavation, strip footing concrete & substructure wall to DPC</td>
+                      <td>4 Days</td>
+                      <td>20%</td>
+                    </tr>
+                    <tr>
+                      <td>M2</td>
+                      <td>Hardcore filling, DPM laying & 100mm floor slab casting</td>
+                      <td>3 Days</td>
+                      <td>15%</td>
+                    </tr>
+                    <tr>
+                      <td>M3</td>
+                      <td>Superstructure brick walling up to ring beam level (2.8m)</td>
+                      <td>6 Days</td>
+                      <td>25%</td>
+                    </tr>
+                    <tr>
+                      <td>M4</td>
+                      <td>Ring beam rebar tying, shuttering & concrete casting</td>
+                      <td>3 Days</td>
+                      <td>15%</td>
+                    </tr>
+                    <tr>
+                      <td>M5</td>
+                      <td>Roof timber trussing & iron sheets installation</td>
+                      <td>4 Days</td>
+                      <td>15%</td>
+                    </tr>
+                    <tr>
+                      <td>M6</td>
+                      <td><strong>Retention Guarantee:</strong> Released 14 days after handover</td>
+                      <td>14 Days</td>
+                      <td><strong>10%</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="contract-clause">
+              <h4>2. MATERIAL CARE & WASTAGE LIMIT</h4>
+              <p>The Fundi is directly responsible for proper cement storage (raised off ground on pallets) and sand/ballast rationing. Mortar wastage exceeding 5% shall be deducted from milestone payments.</p>
+            </div>
+
+            <div class="contract-signatures">
+              <div class="sig-box">
+                <p>Client Signature: _______________________</p>
+                <p>Date: _____ / _____ / 2026</p>
+              </div>
+              <div class="sig-box">
+                <p>Fundi Signature: _______________________</p>
+                <p>Date: _____ / _____ / 2026</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>JengaSmart Kenya 🇰🇪 — Tailored specifically for 5m × 8m Low-Cost High-Efficiency Residential Construction.</p>
+      <p class="footer-sub">All data persists automatically in your local browser cache.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
