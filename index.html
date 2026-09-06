@@ -348,6 +348,25 @@
             <span class="lever-tag">Structural Saving</span>
           </div>
         </div>
+
+        <!-- Lever 7: Quarry Dust Sand-Replacement Strategy -->
+        <div class="lever-card">
+          <div class="lever-top">
+            <div class="lever-info">
+              <span class="lever-category">Raw Materials Economy</span>
+              <h3>Replace / Blend River Sand with Quarry Dust (Vumbi ya Mawe)</h3>
+              <p>Quarry dust costs KES 800/ton vs River Sand at KES 1,600/ton. Blending 50% quarry dust + 50% river sand for blinding, slab & brick mortar slashes raw aggregate costs without compromising structural integrity.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="leverQuarryDust" class="cost-lever" data-savings="18500" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="lever-footer">
+            <span class="lever-savings">Saves approx: <strong>KES 18,500</strong></span>
+            <span class="lever-tag">High Value Replacement</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -785,6 +804,7 @@
           </div>
 
           <div class="suggestion-chips">
+            <button class="chip-btn" onclick="askPreset('quarrydust')">🪨 Quarry Dust vs Sand Rules</button>
             <button class="chip-btn" onclick="askPreset('silt')">🧪 Sand Silt Bottle Test</button>
             <button class="chip-btn" onclick="askPreset('curing')">💧 Concrete 7-Day Curing</button>
             <button class="chip-btn" onclick="askPreset('theft')">🔒 Prevent Cement Leakage</button>

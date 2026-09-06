@@ -352,6 +352,7 @@ const BATCH_RATIOS = {
 // 6. AI COPILOT KNOWLEDGE BASE FOR DEVIN
 const COPILOT_ANSWERS = {
   silt: "🧪 **How to do the Sand Silt Bottle Test on Site:**\n1. Take a transparent glass bottle (e.g. 500ml water bottle).\n2. Fill 1/3 with your delivered river sand.\n3. Add clean water until 3/4 full, add 1 teaspoon salt, and shake vigorously for 1 minute.\n4. Let it settle on a flat surface for 3 hours.\n5. You will see clean sand at the bottom and a darker muddy layer (silt/clay) on top.\n6. **Rule:** If the silt layer is thicker than 6% of the total sand height, REJECT the lorry! High silt causes crumbly plaster and cracked walls.",
+  quarrydust: "🪨 **Can Devin Use Quarry Dust Instead of Sand? YES, BUT WITH RULES:**\n\n1. **100% Replacement for Hardcore Blinding:** YES! Use pure quarry dust (2-3 inches) over your foundation hardcore before laying your 8 rolls of DPM plastic. Saves KES ~12,000.\n\n2. **50/50 Blend for Floor Slab (100mm):** Mix 1 Wheelbarrow Quarry Dust + 1 Wheelbarrow River Sand for every 1 bag of cement + 4 Wheelbarrows ballast. Gives high strength and zero shrinkage cracks!\n\n3. **50/50 Blend for Brick Mortar:** Mix 1.5 Wheelbarrows Quarry Dust + 1.5 Wheelbarrows River Sand per 1 bag cement. Smooth, strong bond for your 2,000 bricks.\n\n4. **Wall Plastering WARNING:** Do NOT use 100% quarry dust for wall plaster! Its fine powder causes hairline drying cracks. For plaster, use at least 70% river sand or wash the quarry dust to remove dust powder.",
   curing: "💧 **Devin's 7-Day Concrete Curing Directive:**\n• Concrete doesn't 'dry' to get hard—it cures through a chemical reaction (hydration) that demands water.\n• For the first 7 days after casting your floor slab or ring beam, have your fundi spray water twice daily (morning & evening) or cover the slab with wet gunny bags/sand berms.\n• **Fact:** Skipping curing cuts concrete strength by over 45% and causes spiderweb surface cracks!",
   theft: "🔒 **Preventing Cement & Rebar Leakage in Kenya:**\n1. Count every single bag offloaded from the lorry yourself or have a trusted relative present.\n2. Require the fundi to return the **EMPTY paper bags** every evening before paying daily wages (ensures bags weren't resold or taken off site).\n3. Keep cement off the ground on timber pallets covered with your DPM polythene rolls to prevent rising soil moisture from hardening bags into stones.",
   bricks: "🧱 **Utilizing Devin's 2,000 Bricks Efficiently:**\n• Your 2,000 bricks are ideally suited for the **substructure foundation footing wall** (from strip footing up to DPC floor level).\n• Because foundation bricks are buried under backfill, you can use these 2,000 bricks right away in Phase 2.\n• For Phase 3 superstructure (walling to ring beam), you will need ~5,000 more bricks (~KES 50,000) or 480 quarry machine-cut stones (9\"x9\")."
@@ -371,7 +372,8 @@ let state = {
     leverKandarasiLabor: true,
     leverCementGrade: true,
     leverScreedOverTiles: false,
-    leverTimberSpacing: true
+    leverTimberSpacing: true,
+    leverQuarryDust: true
   }
 };
 
@@ -1021,7 +1023,9 @@ window.sendChatMessage = function() {
     let reply = "Pole Devin, I didn't recognize that specific question. Try asking about 'sand silt test', 'concrete curing', '2,000 bricks', or 'fundi theft control'!";
     const lower = msg.toLowerCase();
 
-    if (lower.includes('silt') || lower.includes('sand') || lower.includes('soil')) {
+    if (lower.includes('quarry') || lower.includes('dust') || lower.includes('vumbi')) {
+      reply = COPILOT_ANSWERS.quarrydust;
+    } else if (lower.includes('silt') || lower.includes('sand') || lower.includes('soil')) {
       reply = COPILOT_ANSWERS.silt;
     } else if (lower.includes('cure') || lower.includes('curing') || lower.includes('water') || lower.includes('wet')) {
       reply = COPILOT_ANSWERS.curing;
@@ -1049,6 +1053,7 @@ window.askPreset = function(type) {
   if (!box) return;
 
   const questions = {
+    quarrydust: "Can I use quarry dust instead of river sand?",
     silt: "How do I test my river sand for silt on site?",
     curing: "What is the 7-day concrete curing rule?",
     theft: "How do I prevent cement and rebar theft by fundis?",
